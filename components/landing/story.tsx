@@ -36,7 +36,7 @@ export default function Story() {
                 <span className="text-yellow-300">restore_oxygen</span>(pressure):
               </p>
               <p className="text-primary mb-2 pl-4">
-                &gt; <span className="text-white">if</span> presure &lt; 20:
+                &gt; <span className="text-white">if</span> pressure &lt; 20:
               </p>
               <p className="text-primary pl-8">
                 &gt; <span className="text-purple-400">return</span>{' '}
@@ -51,7 +51,7 @@ export default function Story() {
             <div className="from-primary absolute -inset-1 rounded-xl bg-linear-to-r to-blue-600 opacity-20 blur" />
 
             <div className="bg-surface-dark border-surface-dark relative aspect-4/3 overflow-hidden rounded-xl border">
-              <div className="absolute inset-0 bg-[url('/images/astronaut.png')] bg-cover bg-center" />
+              <div className="absolute inset-0 bg-[url('/images/astronaut.webp')] bg-cover bg-center" />
 
               <div className="from-background absolute inset-0 bg-linear-to-t via-transparent to-transparent" />
 
