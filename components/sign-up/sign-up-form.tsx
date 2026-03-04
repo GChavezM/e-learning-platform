@@ -23,6 +23,7 @@ export default function SignUpForm() {
   //   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
+    mode: 'onBlur',
     defaultValues: {
       username: '',
       email: '',
@@ -75,7 +76,9 @@ export default function SignUpForm() {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
+                  Email
+                </FieldLabel>
                 <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 hover:border-slate-400 focus:ring-1 focus:outline-none dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
                     {...field}
