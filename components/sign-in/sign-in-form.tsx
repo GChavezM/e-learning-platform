@@ -20,6 +20,7 @@ export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
+    mode: 'onBlur',
     defaultValues: {
       email: '',
       password: '',
@@ -76,7 +77,7 @@ export default function SignInForm() {
                 <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
                   Password
                 </FieldLabel>
-                <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border border-slate-300 bg-slate-50 transition-all duration-200 focus-within:ring-1 focus-within:outline-none hover:border-slate-400 dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
+                <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 focus-within:ring-1 focus-within:outline-none hover:border-slate-400 dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
                     {...field}
                     id={field.name}
@@ -100,8 +101,8 @@ export default function SignInForm() {
                       {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                     </InputGroupButton>
                   </InputGroupAddon>
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </InputGroup>
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}
           />
@@ -116,7 +117,7 @@ export default function SignInForm() {
               <span className="shimmer absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent" />
               {form.formState.isSubmitting ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                   <span className="text-base font-bold tracking-wide uppercase">Signing In...</span>
                 </>
               ) : (
