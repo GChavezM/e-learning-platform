@@ -1,7 +1,7 @@
 import SignUpForm from '@/components/sign-up/sign-up-form';
 import { Rocket } from 'lucide-react';
 
-export default function SignIn() {
+export default function SignUp() {
   return (
     <div className="text-foreground relative flex flex-col overflow-hidden">
       <div className="absolute inset-0 -z-10">
