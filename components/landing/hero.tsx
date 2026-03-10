@@ -26,7 +26,7 @@ export default function Hero() {
           while building coding skills in Python one step at a time.
         </p>
 
-        <div className="mt-4 flex w-full flex-col justify-center gap-4 sm:flex-row">
+        <div className="mt-4 flex w-full justify-center">
           <Button
             size="lg"
             className="bg-primary text-background flex h-12 transform items-center gap-2 rounded-lg px-8 text-base font-bold shadow-[0_0_20px_rgba(29,205,158,0.4)] transition-all hover:scale-105 hover:bg-emerald-400 sm:h-14 sm:text-lg"
