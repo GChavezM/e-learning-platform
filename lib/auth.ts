@@ -10,6 +10,10 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  session: {
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
+  },
   plugins: [nextCookies()],
   trustedOrigins: [process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3000'],
 });
