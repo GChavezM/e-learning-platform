@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const signInSchema = z
+export const signUpSchema = z
   .object({
     name: z
       .string()
@@ -22,7 +22,7 @@ export const signInSchema = z
     path: ['confirmPassword'],
   });
 
-export const signUpSchema = z.object({
+export const signInSchema = z.object({
   email: z.email({ error: 'Please enter a valid eail address' }).trim().toLowerCase(),
   password: z.string().trim().min(1),
 });
