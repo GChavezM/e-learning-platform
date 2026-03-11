@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import { signInSchema, signUpSchema } from './schemas';
 import type { SignInFormData, SignUpFormData } from './schemas';
 import { redirect } from 'next/navigation';
-// import { headers } from 'next/headers';
+import { headers } from 'next/headers';
 
 export type ActionResult = { success: true } | { success: false; error: string };
 
@@ -20,7 +20,7 @@ export async function signInAction(formData: SignInFormData): Promise<ActionResu
   try {
     await auth.api.signInEmail({
       body: { email, password },
-      //   headers: await headers(),
+      headers: await headers(),
     });
   } catch {
     return { success: false, error: 'Invalid email or password' };
@@ -30,13 +30,13 @@ export async function signInAction(formData: SignInFormData): Promise<ActionResu
 }
 
 export async function signUpAction(formData: SignUpFormData): Promise<ActionResult> {
-  const paresd = signUpSchema.safeParse(formData);
+  const parsed = signUpSchema.safeParse(formData);
 
-  if (!paresd.success) {
+  if (!parsed.success) {
     return { success: false, error: 'Invalid input. Please check your details' };
   }
 
-  const { name, email, password } = paresd.data;
+  const { name, email, password } = parsed.data;
 
   try {
     await auth.api.signUpEmail({
@@ -48,7 +48,7 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
       return { success: false, error: 'An account with that email already exists.' };
     }
 
-    return { success: false, error: 'Clould not create account. Please try again' };
+    return { success: false, error: 'Could not create account. Please try again' };
   }
 
   redirect('/dashboard');
