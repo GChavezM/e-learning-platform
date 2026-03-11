@@ -24,7 +24,7 @@ model User {
   updatedAt       DateTime          @updatedAt
   sessions        Session[]
   accounts        Account[]
-  submissions     Sumbmission[]
+  submissions     Submission[]
   lessonProgress  LessonProgress[]
   chapterProgress ChapterProgress[]
   stats           UserStats?
@@ -109,6 +109,7 @@ model ChapterProgress {
 
   @@unique([userId, chapterId])
   @@index([userId])
+  @@index([chapterId])
   @@map("chapter_progress")
 }
 
@@ -118,7 +119,7 @@ model Lesson {
   order     Int
   title     String
   content   String           @db.Text
-  xpReward  Int
+  xpReward  Int              @default(50)
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
   chapter   Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
@@ -145,21 +146,21 @@ model LessonProgress {
 }
 
 model Challenge {
-  id             String        @id @default(cuid())
-  lessonId       String        @unique
-  instructions   String        @db.Text
-  starterCode    String        @db.Text
-  testCode       String        @db.Text
+  id             String       @id @default(cuid())
+  lessonId       String       @unique
+  instructions   String       @db.Text
+  starterCode    String       @db.Text
+  testCode       String       @db.Text
   expectedOutput String?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  lesson         Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  submissions    Sumbmission[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  lesson         Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submissions    Submission[]
 
   @@map("challenge")
 }
 
-model Sumbmission {
+model Submission {
   id          String    @id @default(cuid())
   userId      String
   challengeId String
