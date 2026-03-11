@@ -1,4 +1,4 @@
-import SignInForm from '@/components/sign-in/sign-in-form';
+import SignInForm from '@/components/auth/sign-in-form';
 import { Rocket } from 'lucide-react';
 
 export default function SignIn() {
