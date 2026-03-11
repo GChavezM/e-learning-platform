@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Card } from '../ui/card';
-import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
@@ -10,16 +9,15 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '
 import { EyeIcon, EyeOffIcon, Loader2, Lock, Mail, Send } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-
-const formSchema = z.object({
-  email: z.email(),
-  password: z.string().min(8).max(100),
-});
+import { SignInFormData, signInSchema } from '@/modules/auth/schemas';
+import { signInAction } from '@/modules/auth/actions';
+import { toast } from 'sonner';
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const form = useForm({
-    resolver: zodResolver(formSchema),
+
+  const form = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -27,9 +25,12 @@ export default function SignInForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log('Form Data:', data);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const onSubmit = async (data: SignInFormData) => {
+    const result = await signInAction(data);
+
+    if (!result.success) {
+      toast.error(result.error);
+    }
   };
 
   return (
