@@ -150,7 +150,7 @@ export default function SignUpForm() {
                     {...field}
                     id={field.name}
                     className="placeholder:text-slate-400 dark:placeholder:text-[#9eb7b1]"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showConfirmPassword ? 'text' : 'password'}
                     autoComplete="new-password"
                     placeholder="Repeat your password"
                     aria-invalid={fieldState.invalid}
