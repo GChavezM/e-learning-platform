@@ -13,16 +13,20 @@ datasource db {
   provider = "postgresql"
 }
 
+// Authentication
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id              String            @id
+  name            String
+  email           String
+  emailVerified   Boolean           @default(false)
+  image           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  sessions        Session[]
+  accounts        Account[]
+  submissions     Sumbmission[]
+  lessonProgress  LessonProgress[]
+  chapterProgress ChapterProgress[]
 
   @@unique([email])
   @@map("user")
@@ -74,4 +78,97 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+// Courses
+
+model Chapter {
+  id          String            @id @default(cuid())
+  order       Int               @unique
+  title       String
+  description String
+  storyText   String            @db.Text
+  isPublic    Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  lessons     Lesson[]
+  progress    ChapterProgress[]
+
+  @@map("chapter")
+}
+
+model ChapterProgress {
+  id         String   @id @default(cuid())
+  userId     String
+  chapterId  String
+  unlockedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter    Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chapterId])
+  @@index([userId])
+  @@map("chapter_progress")
+}
+
+model Lesson {
+  id        String           @id @default(cuid())
+  chapterId String
+  order     Int
+  title     String
+  content   String           @db.Text
+  xpReward  Int
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  chapter   Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  challenge Challenge?
+  progress  LessonProgress[]
+
+  @@unique([chapterId, order])
+  @@index([chapterId])
+  @@map("lesson")
+}
+
+model LessonProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  lessonId    String
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@map("lesson_progress")
+}
+
+model Challenge {
+  id             String        @id @default(cuid())
+  lessonId       String        @unique
+  instructions   String        @db.Text
+  starterCode    String        @db.Text
+  testCode       String        @db.Text
+  expectedOutput String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  lesson         Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submissions    Sumbmission[]
+
+  @@map("challenge")
+}
+
+model Sumbmission {
+  id          String    @id @default(cuid())
+  userId      String
+  challengeId String
+  code        String    @db.Text
+  isCorrect   Boolean
+  output      String?
+  submittedAt DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([challengeId])
+  @@map("submission")
 }
