@@ -86,6 +86,7 @@ model Verification {
 model Chapter {
   id           String            @id @default(cuid())
   order        Int               @unique
+  slug         String            @unique
   title        String
   description  String
   storyText    String            @db.Text
@@ -117,6 +118,7 @@ model Lesson {
   id        String           @id @default(cuid())
   chapterId String
   order     Int
+  slug      String
   title     String
   content   String           @db.Text
   xpReward  Int              @default(50)
@@ -127,6 +129,7 @@ model Lesson {
   progress  LessonProgress[]
 
   @@unique([chapterId, order])
+  @@unique([chapterId, slug])
   @@index([chapterId])
   @@map("lesson")
 }
