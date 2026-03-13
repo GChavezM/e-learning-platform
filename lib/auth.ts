@@ -20,13 +20,30 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
-          await prisma.userStats.create({
-            data: {
-              userId: user.id,
-              totalXp: 0,
-              level: 1,
-            },
-          });
+          try {
+            await prisma.$transaction(async (tx) => {
+              await tx.userStats.create({
+                data: {
+                  userId: user.id,
+                  totalXp: 0,
+                  level: 1,
+                },
+              });
+              const firstChapter = await tx.chapter.findFirst({
+                where: { order: 1 },
+              });
+              if (firstChapter) {
+                await tx.chapterProgress.create({
+                  data: {
+                    userId: user.id,
+                    chapterId: firstChapter.id,
+                  },
+                });
+              }
+            });
+          } catch (error) {
+            console.error('[auth] Failed to initialize data for new user:', user.id, error);
+          }
         },
       },
     },
