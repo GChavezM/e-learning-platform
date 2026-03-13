@@ -48,8 +48,20 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
       return { success: false, error: 'An account with that email already exists.' };
     }
 
-    return { success: false, error: 'Could not create account. Please try again' };
+    return { success: false, error: 'Could not create account. Please try again.' };
   }
 
   redirect('/dashboard');
+}
+
+export async function signOutAction(): Promise<ActionResult> {
+  try {
+    await auth.api.signOut({
+      headers: await headers(),
+    });
+  } catch {
+    return { success: false, error: 'Could not sign out. Please try again.' };
+  }
+
+  redirect('/sign-in');
 }
