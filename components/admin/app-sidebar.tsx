@@ -15,6 +15,8 @@ import {
   SidebarSeparator,
 } from '../ui/sidebar';
 import Link from 'next/link';
+import { signOutAction } from '@/modules/auth/actions';
+import { toast } from 'sonner';
 
 export function AppSidebar() {
   const pathName = usePathname();
@@ -31,6 +33,13 @@ export function AppSidebar() {
       icon: User,
     },
   ];
+
+  const handleSignOut = async () => {
+    const result = await signOutAction();
+    if (!result.success) {
+      toast.error(result.error);
+    }
+  };
 
   return (
     <Sidebar>
@@ -87,7 +96,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
+            <SidebarMenuButton onClick={handleSignOut}>
               <LogOut />
               <span>Sign Out</span>
             </SidebarMenuButton>
