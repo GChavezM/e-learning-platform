@@ -65,7 +65,7 @@ export async function getChapterById(id: string): Promise<ChapterWithLessons | n
   });
 }
 
-export async function getChapterBySlu(slug: string): Promise<ChapterWithLessons | null> {
+export async function getChapterBySlug(slug: string): Promise<ChapterWithLessons | null> {
   return prisma.chapter.findUnique({
     where: { slug },
     ...chapterWithLessonsShape,
