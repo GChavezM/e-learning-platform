@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 
 export type { LessonProgress };
 
-export type ChapterProgressSumary = {
+export type ChapterProgressSummary = {
   completed: number;
   total: number;
   allComplete: boolean;
@@ -20,17 +20,16 @@ export async function getLessonProgress(
   });
 }
 
-export async function getAllProgressForUser(userId: string): Promise<LessonProgress[]> {
+export async function getAllLessonProgressForUser(userId: string): Promise<LessonProgress[]> {
   return prisma.lessonProgress.findMany({
-    where: { userId, completed: true },
-    orderBy: { completedAt: 'desc' },
+    where: { userId },
   });
 }
 
 export async function getChapterProgress(
   userId: string,
   chapterId: string
-): Promise<ChapterProgressSumary> {
+): Promise<ChapterProgressSummary> {
   const [total, completed] = await Promise.all([
     prisma.lesson.count({ where: { chapterId } }),
     prisma.lessonProgress.count({
@@ -41,7 +40,16 @@ export async function getChapterProgress(
   return { completed, total, allComplete: total > 0 && completed === total };
 }
 
-export async function getUserStats(userId: string) {
+export async function getUnlockedChapterIds(userId: string): Promise<string[]> {
+  const rows = await prisma.chapterProgress.findMany({
+    where: { userId },
+    select: { chapterId: true },
+  });
+
+  return rows.map((row) => row.chapterId);
+}
+
+export async function getUserStats(userId: string): Promise<UserStats | null> {
   return prisma.userStats.findUnique({
     where: { userId },
   });
