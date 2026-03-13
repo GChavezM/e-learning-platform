@@ -1,7 +1,7 @@
 'use client';
 
 import { LayoutDashboard, LogOut, Rocket, User } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +19,7 @@ import { signOutAction } from '@/modules/auth/actions';
 import { toast } from 'sonner';
 
 export function AppSidebar() {
+  const router = useRouter();
   const pathName = usePathname();
 
   const navItems = [
@@ -39,6 +40,8 @@ export function AppSidebar() {
     if (!result.success) {
       toast.error(result.error);
     }
+
+    router.push('/sign-in');
   };
 
   return (

@@ -12,8 +12,10 @@ import Link from 'next/link';
 import { SignUpFormData, signUpSchema } from '@/modules/auth/schemas';
 import { signUpAction } from '@/modules/auth/actions';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -34,6 +36,8 @@ export default function SignUpForm() {
     if (!result.success) {
       toast.error(result.error);
     }
+
+    router.push('/dashboard');
   };
 
   return (
