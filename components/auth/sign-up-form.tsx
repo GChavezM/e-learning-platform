@@ -35,6 +35,7 @@ export default function SignUpForm() {
 
     if (!result.success) {
       toast.error(result.error);
+      return;
     }
 
     router.push('/dashboard');
@@ -61,7 +62,7 @@ export default function SignUpForm() {
                     {...field}
                     id={field.name}
                     className="placeholder:text-slate-400 dark:placeholder:text-[#9eb7b1]"
-                    placeholder="Choose a user name"
+                    placeholder="John Doe"
                     aria-invalid={fieldState.invalid}
                     disabled={form.formState.isSubmitting}
                     autoComplete="name"
