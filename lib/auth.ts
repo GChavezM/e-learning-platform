@@ -16,4 +16,19 @@ export const auth = betterAuth({
   },
   plugins: [nextCookies()],
   trustedOrigins: [process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3000'],
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          await prisma.userStats.create({
+            data: {
+              userId: user.id,
+              totalXp: 0,
+              level: 1,
+            },
+          });
+        },
+      },
+    },
+  },
 });
