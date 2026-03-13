@@ -3,7 +3,7 @@
 import { signInSchema, signUpSchema } from './schemas';
 import type { SignInFormData, SignUpFormData } from './schemas';
 import { headers } from 'next/headers';
-import { signIn, signOut, signUp } from './service';
+import { authService } from './service';
 
 export type ActionResult = { success: true } | { success: false; error: string };
 
@@ -14,7 +14,7 @@ export async function signInAction(formData: SignInFormData): Promise<ActionResu
     return { success: false, error: 'Invalid credentials' };
   }
 
-  const result = await signIn(parsed.data, await headers());
+  const result = await authService.signIn(parsed.data, await headers());
 
   if (result.isFail()) {
     return { success: false, error: result.getError() };
@@ -30,7 +30,7 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
     return { success: false, error: 'Invalid input. Please check your details' };
   }
 
-  const result = await signUp(parsed.data, await headers());
+  const result = await authService.signUp(parsed.data, await headers());
 
   if (result.isFail()) {
     return { success: false, error: result.getError() };
@@ -40,7 +40,7 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
 }
 
 export async function signOutAction(): Promise<ActionResult> {
-  const result = await signOut(await headers());
+  const result = await authService.signOut(await headers());
 
   if (result.isFail()) {
     return { success: false, error: result.getError() };

@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth';
 import { SignInFormData, SignUpFormData } from './schemas';
 import { Result } from '@/lib/result';
 
-export async function signIn(
+async function signIn(
   data: SignInFormData,
   requestHeaders: Headers
 ): Promise<Result<void, string>> {
@@ -17,7 +17,7 @@ export async function signIn(
   }
 }
 
-export async function signUp(
+async function signUp(
   data: SignUpFormData,
   requestHeaders: Headers
 ): Promise<Result<void, string>> {
@@ -36,7 +36,7 @@ export async function signUp(
   }
 }
 
-export async function signOut(requestHeaders: Headers): Promise<Result<void, string>> {
+async function signOut(requestHeaders: Headers): Promise<Result<void, string>> {
   try {
     await auth.api.signOut({
       headers: requestHeaders,
@@ -46,3 +46,9 @@ export async function signOut(requestHeaders: Headers): Promise<Result<void, str
     return Result.fail('Could not sign out. Please try again.');
   }
 }
+
+export const authService = {
+  signIn,
+  signUp,
+  signOut,
+};
