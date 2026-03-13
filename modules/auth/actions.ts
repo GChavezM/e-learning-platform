@@ -1,10 +1,9 @@
 'use server';
 
-import { auth } from '@/lib/auth';
 import { signInSchema, signUpSchema } from './schemas';
 import type { SignInFormData, SignUpFormData } from './schemas';
-import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
+import { signIn, signOut, signUp } from './service';
 
 export type ActionResult = { success: true } | { success: false; error: string };
 
@@ -15,18 +14,13 @@ export async function signInAction(formData: SignInFormData): Promise<ActionResu
     return { success: false, error: 'Invalid credentials' };
   }
 
-  const { email, password } = parsed.data;
+  const result = await signIn(parsed.data, await headers());
 
-  try {
-    await auth.api.signInEmail({
-      body: { email, password },
-      headers: await headers(),
-    });
-  } catch {
-    return { success: false, error: 'Invalid email or password' };
+  if (result.isFail()) {
+    return { success: false, error: result.getError() };
   }
 
-  redirect('/dashboard');
+  return { success: true };
 }
 
 export async function signUpAction(formData: SignUpFormData): Promise<ActionResult> {
@@ -36,32 +30,21 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
     return { success: false, error: 'Invalid input. Please check your details' };
   }
 
-  const { name, email, password } = parsed.data;
+  const result = await signUp(parsed.data, await headers());
 
-  try {
-    await auth.api.signUpEmail({
-      body: { name, email, password },
-    });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : '';
-    if (message.toLowerCase().includes('already exists')) {
-      return { success: false, error: 'An account with that email already exists.' };
-    }
-
-    return { success: false, error: 'Could not create account. Please try again.' };
+  if (result.isFail()) {
+    return { success: false, error: result.getError() };
   }
 
-  redirect('/dashboard');
+  return { success: true };
 }
 
 export async function signOutAction(): Promise<ActionResult> {
-  try {
-    await auth.api.signOut({
-      headers: await headers(),
-    });
-  } catch {
-    return { success: false, error: 'Could not sign out. Please try again.' };
+  const result = await signOut(await headers());
+
+  if (result.isFail()) {
+    return { success: false, error: result.getError() };
   }
 
-  redirect('/sign-in');
+  return { success: true };
 }
