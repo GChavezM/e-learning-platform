@@ -12,6 +12,7 @@ import CodeEditor from '../editor/code-editor';
 import OutputPanel from '../editor/output-panel';
 import RunButton from '../editor/run-button';
 import { Button } from '../ui/button';
+import PyodideLoadingOverlay from './pyodide-loading-overlay';
 
 interface LessonViewProps {
   lesson: LessonWithChallengeAndChapter;
@@ -174,12 +175,15 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
                 </div>
               )}
 
-              <CodeEditor
-                value={code}
-                onChange={setCode}
-                readOnly={isLoading || isSubmitting}
-                height="320px"
-              />
+              <div className="relative overflow-hidden rounded-lg border">
+                <PyodideLoadingOverlay isReady={isReady} />
+                <CodeEditor
+                  value={code}
+                  onChange={setCode}
+                  readOnly={isLoading || isSubmitting}
+                  height="320px"
+                />
+              </div>
 
               <div className="flex items-center justify-between gap-3">
                 <RunButton
