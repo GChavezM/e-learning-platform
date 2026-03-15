@@ -88,7 +88,7 @@ function OutputBody({ variant, output, error }: OutputBodyProps) {
   if (variant === 'idle') {
     return (
       <p className="px-4 py-4 text-sm text-[#3D5568] italic select-none">
-        Output will appera here...
+        Output will appear here...
       </p>
     );
   }
