@@ -3,12 +3,13 @@
 import { usePyodide } from '@/hooks/usePyodide';
 import { submitChallengeAction } from '@/modules/challenge/actions';
 import { LessonWithChallengeAndChapter } from '@/modules/course/queries';
-import { ArrowRight, BookOpen, Radio, Star } from 'lucide-react';
+import { ArrowRight, Star, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import Markdown from 'react-markdown';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import Link from 'next/link';
+import { SpaceCard } from '../admin/space-card';
 import CodeEditor from '../editor/code-editor';
 import OutputPanel from '../editor/output-panel';
 import RunButton from '../editor/run-button';
@@ -93,87 +94,103 @@ export default function LessonView({
   }, [challenge, code, output, isCorrect, hasSubmitted, router]);
 
   return (
-    <div className="bg-background min-h-screen">
-      <div className="border-b border-[#1e2d3d] bg-[#0B0F1A] px-4 py-3">
-        <div className="mx-auto flex max-w-screen-2xl items-center gap-3">
-          <Radio className="text-primary h-4 w-4 shrink-0" />
-          <span className="text-muted-foreground text-xs font-semibold tracking-widest uppercase">
-            PyMission Control
-          </span>
-          <span className="text-[#1e2d3d]">/</span>
-          <span className="text-muted-foreground text-xs">
-            Chapter {chapter.order} — {chapter.title}
-          </span>
-          <span className="text-[#1e2d3d]">/</span>
-          <span className="text-xs text-slate-300">{lesson.title}</span>
+    <div className="min-h-screen bg-[#060A12]">
+      {/* Completion Banner */}
+      {alreadyCompleted && (
+        <div className="border-b border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
+          <div className="mx-auto flex max-w-screen-2xl items-center gap-2 text-sm font-semibold text-emerald-400">
+            <Check className="h-4 w-4" />
+            Mission Complete ✅ — You can still run and modify your code
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Page Layout */}
       <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-6 p-4 lg:grid-cols-[2fr_3fr] lg:p-6">
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5">
-            <span className="text-primary inline-flex w-fit items-center gap-1.5 rounded-full border border-[#1DCD9E]/30 bg-[#1DCD9E]/10 px-3 py-1 text-xs font-semibold tracking-wide">
-              Chapter {chapter.order} — {chapter.title}
-            </span>
-            <h1 className="text-2xl font-bold text-slate-100 lg:text-3xl">{lesson.title}</h1>
+        {/* LEFT PANEL */}
+        <div className="flex flex-col gap-6">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-xs text-slate-400">
+            <Link href="/dashboard" className="transition-colors hover:text-[#1DCD9E]">
+              Dashboard
+            </Link>
+            <span>/</span>
+            <Link
+              href={`/chapter/${chapter.id}`}
+              className="transition-colors hover:text-[#1DCD9E]"
+            >
+              Chapter {chapter.order}
+            </Link>
+            <span>/</span>
+            <span className="text-slate-200">{lesson.title}</span>
           </div>
 
-          <Card className="border-[#1e2d3d] bg-[#0B0F1A]/80">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-sm text-slate-400">
-                <Radio className="text-primary h-3.5 w-3.5" />
-                Mission Transmission
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm leading-relaxed text-slate-300 italic">{chapter.storyText}</p>
-            </CardContent>
-          </Card>
+          {/* Chapter Badge & Title */}
+          <div className="flex flex-col gap-3">
+            <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#1DCD9E]/40 bg-[#1DCD9E]/10 px-3 py-1.5 text-xs font-bold tracking-widest text-[#1DCD9E] uppercase">
+              Chapter {chapter.order} — {chapter.title}
+            </span>
+            <h1 className="font-space-grotesk bg-linear-to-r from-[#1DCD9E] to-cyan-400 bg-clip-text text-3xl font-bold text-transparent lg:text-4xl">
+              {lesson.title}
+            </h1>
+          </div>
 
-          <Card className="border-[#1e2d3d] bg-[#0D1117]">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-sm text-slate-400">
-                <BookOpen className="h-3.5 w-3.5" />
-                Lesson
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-invert prose-sm prose-headings:text-slate-100 prose-headings:font-semibold prose-code:rounded prose-code:bg-[#1e2d3d] prose-code:px-1 prose-code:py-0.5 prose-code:text-[#1DCD9E] prose-code:text-xs prose-code:font-mono prose-pre:bg-[#0B0F1A] prose-pre:border prose-pre:border-[#1e2d3d] prose-strong:text-slate-100 prose-a:text-[#1DCD9E] max-w-none text-slate-300">
-                <Markdown>{lesson.content}</Markdown>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Story Panel */}
+          <SpaceCard className="transmission-panel relative space-y-4 border-[#1DCD9E]/40 bg-linear-to-br from-[#0B0F1A]/80 to-[#060A12]/60 p-6">
+            <div className="relative z-10 flex items-center gap-2">
+              <span className="text-lg">📡</span>
+              <h2 className="text-xs font-bold tracking-wide text-[#1DCD9E] uppercase">
+                Incoming Transmission
+              </h2>
+            </div>
+            <p className="typewriter relative z-10 text-sm leading-relaxed text-slate-200 italic">
+              {chapter.storyText}
+            </p>
+          </SpaceCard>
 
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1.5 text-sm font-medium text-amber-300">
-              <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />+{lesson.xpReward} XP on
-              completion
+          {/* Lesson Content */}
+          <SpaceCard className="scan-lines border-[#1e2d3d] bg-[#0B0F1A]/80 p-6">
+            <div className="prose prose-invert prose-sm prose-headings:text-slate-100 prose-headings:font-semibold prose-headings:mb-2 prose-headings:mt-4 prose-p:text-slate-300 prose-p:leading-relaxed prose-code:rounded prose-code:bg-[#1e2d3d] prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[#FFD700] prose-code:text-xs prose-code:font-mono prose-pre:bg-[#0D1117] prose-pre:border prose-pre:border-[#1e2d3d] prose-pre:p-4 prose-pre:overflow-x-auto prose-strong:text-slate-100 prose-a:text-[#1DCD9E] prose-a:hover:text-cyan-300 prose-a:hover:underline prose-li:text-slate-300 prose-li:my-1 max-w-none">
+              <Markdown>{lesson.content}</Markdown>
+            </div>
+          </SpaceCard>
+
+          {/* XP Badge */}
+          <div className="flex flex-wrap items-center gap-2 pt-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FFD700]/30 bg-[#FFD700]/10 px-3 py-1.5 text-xs font-bold text-[#FFD700]">
+              <Star className="h-3.5 w-3.5 fill-[#FFD700]" />+{lesson.xpReward} XP on completion
             </span>
             {alreadyCompleted && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-400">
-                ✅ Completed
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-emerald-400">
+                <Check className="h-3.5 w-3.5" />
+                Completed
               </span>
             )}
           </div>
         </div>
 
+        {/* RIGHT PANEL */}
         <div className="flex flex-col gap-4">
           {challenge && (
             <>
-              <Card className="border-[#1DCD9E]/25 bg-[#0B0F1A]">
-                <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-sm font-semibold text-[#1DCD9E]">
-                    <span className="text-base">🛸</span>
+              {/* Mission Objective Header */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 border-b-2 border-[#1DCD9E] pb-3">
+                  <span className="text-lg">🎯</span>
+                  <h2 className="text-sm font-bold tracking-wide text-[#1DCD9E] uppercase">
                     Mission Objective
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm leading-relaxed text-slate-300">{challenge.instructions}</p>
-                </CardContent>
-              </Card>
+                  </h2>
+                </div>
 
+                {/* Instructions Callout */}
+                <SpaceCard className="border-[#1DCD9E]/40 bg-[#0B1421]/60 p-4">
+                  <p className="text-sm leading-relaxed text-slate-300">{challenge.instructions}</p>
+                </SpaceCard>
+              </div>
+
+              {/* Python Runtime Status */}
               {!isReady && (
-                <div className="flex items-center gap-2 rounded-md border border-[#1e2d3d] bg-[#0B0F1A] px-4 py-2.5 text-xs text-slate-500">
+                <div className="flex items-center gap-2 rounded-lg border border-[#1e2d3d] bg-[#0B0F1A] px-4 py-3 text-xs text-slate-400">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DCD9E] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DCD9E]/50" />
@@ -182,24 +199,40 @@ export default function LessonView({
                 </div>
               )}
 
-              <div className="relative overflow-hidden rounded-lg border">
-                <PyodideLoadingOverlay isReady={isReady} />
-                <CodeEditor
-                  value={code}
-                  onChange={setCode}
-                  readOnly={isLoading || isSubmitting}
-                  height="320px"
-                />
-              </div>
+              {/* Code Editor */}
+              <SpaceCard className="flex flex-col overflow-hidden border-[#1e2d3d] bg-[#0B0F1A] p-0">
+                {/* File Tab */}
+                <div className="border-b border-[#1e2d3d] bg-[#060A12]/50 px-4 py-3">
+                  <p className="font-mono text-xs text-slate-400">
+                    <span className="text-[#1DCD9E]">📄</span> mission_code.py
+                  </p>
+                </div>
 
+                {/* Editor */}
+                <div className="relative flex-1 overflow-hidden">
+                  <PyodideLoadingOverlay isReady={isReady} />
+                  <CodeEditor
+                    value={code}
+                    onChange={setCode}
+                    readOnly={isLoading || isSubmitting}
+                    height="320px"
+                  />
+                </div>
+              </SpaceCard>
+
+              {/* Run Button with Shortcut */}
               <div className="flex items-center justify-between gap-3">
                 <RunButton
                   onClick={handleRun}
                   isLoading={isLoading}
                   disabled={!isReady || isLoading}
                 />
+                <span className="text-xs text-slate-500">
+                  Shortcut: <span className="font-mono text-slate-400">Ctrl+Enter</span>
+                </span>
               </div>
 
+              {/* Output Panel */}
               <OutputPanel
                 output={output}
                 error={error}
@@ -208,17 +241,21 @@ export default function LessonView({
                 isTestFailure={isTestFailure}
               />
 
+              {/* Submit Button */}
               {isCorrect === true && !alreadyCompleted && (
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || hasSubmitted}
                   size="lg"
-                  className="w-full gap-2 bg-emerald-600 font-semibold text-white shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:bg-emerald-500 disabled:opacity-60"
+                  className="w-full gap-2 bg-linear-to-r from-emerald-500 to-emerald-600 font-semibold text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     'Logging mission data…'
                   ) : hasSubmitted ? (
-                    '✅ Submitted'
+                    <>
+                      <Check className="h-4 w-4" />
+                      Submitted
+                    </>
                   ) : (
                     <>
                       Submit & Continue
@@ -230,6 +267,7 @@ export default function LessonView({
             </>
           )}
 
+          {/* Lesson Navigation */}
           <LessonNav
             currentLesson={{ id: lesson.id, chapterId: chapter.id, order: lesson.order }}
             prevLesson={prevLesson}
