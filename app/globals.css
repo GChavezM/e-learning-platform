@@ -38,6 +38,7 @@
   --color-card: var(--card);
   --color-surface-dark: var(--surface-dark);
   --color-xp-gold: var(--xp-gold);
+  --color-lvl-purple: var(--lvl-purple);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -83,6 +84,7 @@
   --surface-dark: oklch(0.2579 0.0152 174.82);
   --grid-hero: oklch(0.3259 0.021 176.78 / 30%);
   --xp-gold: oklch(0.82 0.165 85);
+  --lvl-purple: oklch(0.72 0.22 295);
 }
 
 .dark {
@@ -120,6 +122,7 @@
   --surface-dark: oklch(0.2579 0.0152 174.82);
   --grid-hero: oklch(0.3259 0.021 176.78 / 30%);
   --xp-gold: oklch(0.86 0.18 88);
+  --lvl-purple: oklch(0.75 0.24 295);
 }
 
 @layer base {
@@ -164,6 +167,10 @@
   .shimmer {
     animation: shimmer 1.5s infinite;
   }
+
+  .animate-lvl-pulse {
+    animation: lvl-pulse 2.4s ease-in-out infinite;
+  }
 }
 
 @keyframes move-twinkle {
@@ -184,5 +191,15 @@
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
+  }
+}
+
+@keyframes lvl-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0px 0px color-mix(in oklch, var(--lvl-color) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 14px 4px color-mix(in oklch, var(--lvl-color) 45%, transparent);
   }
 }
