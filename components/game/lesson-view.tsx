@@ -183,7 +183,6 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
 
               <div className="flex items-center justify-between gap-3">
                 <RunButton onClick={handleRun} isLoading={isLoading} />
-                <span className="hidden text-xs text-[#3d5568] sm:block">Ctrl + Enter to run</span>
               </div>
 
               <OutputPanel
