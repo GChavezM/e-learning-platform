@@ -147,7 +147,6 @@ self.onmessage = async (event: MessageEvent<WorkerIncommingMessage>): Promise<vo
     console.log('[Worker] Initialization request received');
     try {
       await getPyodide();
-      self.postMessage({ type: 'ready' });
     } catch (error) {
       self.postMessage({
         type: 'error',
