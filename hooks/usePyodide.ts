@@ -106,7 +106,7 @@ export function usePyodide(): UsePyodideReturn {
           output: '',
           error: 'Component unmounted before execution completed.',
         });
-
+      }
         pending.clear();
         worker?.terminate();
         workerRef.current = null;

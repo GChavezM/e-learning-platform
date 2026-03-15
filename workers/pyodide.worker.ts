@@ -1,12 +1,12 @@
-const PYODIDE_INDEX_URL = "'https://cdn.jsdelivr.net/pyodide/v0.29.3/full/";
+const PYODIDE_INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.3/full/';
 
 const REDIRECT_STDIO = `
 import sys, io
 sys.stdout = io.StringIO()
-sys.stderr = io.STRINGIO()
+sys.stderr = io.StringIO()
 `.trim();
 
-const CAPTURE_STDOUT = `sys.stdout.getValue()`;
+const CAPTURE_STDOUT = `sys.stdout.getvalue()`;
 
 interface WorkerIncommingMessage {
   id: string;
