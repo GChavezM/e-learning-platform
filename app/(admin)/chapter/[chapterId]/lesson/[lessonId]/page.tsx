@@ -1,7 +1,12 @@
 import LessonView from '@/components/game/lesson-view';
 import { LessonProgress } from '@/generated/prisma/client';
 import { auth } from '@/lib/auth';
-import { getLessonById, LessonWithChallengeAndChapter } from '@/modules/course/queries';
+import {
+  getLessonById,
+  getLessonSibilings,
+  LessonSiblings,
+  LessonWithChallengeAndChapter,
+} from '@/modules/course/queries';
 import { getLessonProgress } from '@/modules/progress/queries';
 import { progressService } from '@/modules/progress/service';
 import { headers } from 'next/headers';
@@ -45,13 +50,19 @@ export default async function LessonPage({ params }: LessonPageProps) {
     redirect('/dashboard');
   }
 
-  const lessonProgress: LessonProgress | null = await getLessonProgress(userId, lessonId);
+  const [lessonProgress, { prevLesson, nextLesson }]: [LessonProgress | null, LessonSiblings] =
+    await Promise.all([
+      getLessonProgress(userId, lessonId) as Promise<LessonProgress | null>,
+      getLessonSibilings(chapterId, lesson.order),
+    ]);
 
   return (
     <LessonView
       lesson={lesson}
       userId={userId}
       alreadyCompleted={lessonProgress?.completed ?? false}
+      prevLesson={prevLesson}
+      nextLesson={nextLesson}
     />
   );
 }

@@ -43,6 +43,13 @@ export type LessonWithChallengeAndChapter = Prisma.LessonGetPayload<
 
 export type { Challenge };
 
+export type LessonRef = { id: string };
+
+export type LessonSiblings = {
+  prevLesson: LessonRef | null;
+  nextLesson: LessonRef | null;
+};
+
 export async function getAllChapters(): Promise<ChapterListItem[]> {
   return prisma.chapter.findMany({
     orderBy: { order: 'asc' },
@@ -97,6 +104,26 @@ export async function getLessonBySlugAndChapterId(
     where: { chapterId_slug: { chapterId, slug: lessonSlug } },
     ...lessonWithChallengeAndChapterShape,
   });
+}
+
+export async function getLessonSibilings(
+  chapterId: string,
+  currentOrder: number
+): Promise<LessonSiblings> {
+  const [prevLesson, nextLesson] = await Promise.all([
+    currentOrder > 1
+      ? prisma.lesson.findUnique({
+          where: { chapterId_order: { chapterId, order: currentOrder - 1 } },
+          select: { id: true },
+        })
+      : null,
+    prisma.lesson.findUnique({
+      where: { chapterId_order: { chapterId, order: currentOrder + 1 } },
+      select: { id: true },
+    }),
+  ]);
+
+  return { prevLesson, nextLesson };
 }
 
 export async function getChallengeByLessonId(lessonId: string): Promise<Challenge | null> {
