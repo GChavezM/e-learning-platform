@@ -10,6 +10,7 @@ sys.stderr = io.StringIO()
 `.trim();
 
 const CAPTURE_STDOUT = `sys.stdout.getvalue()`;
+const CAPTURE_STDERR = `sys.stderr.getvalue()`;
 
 interface WorkerIncomingMessage {
   id: string;
@@ -53,12 +54,9 @@ async function getPyodide(): Promise<PyodideInterface> {
   return pyodideLoadingPromise;
 }
 
-function extractErrorMessage(error: unknown): string {
-  if (!(error instanceof Error)) {
-    return String(error);
-  }
-
-  const raw = error.message;
+function extractErrorMessage(error: unknown, rawOverride?: string): string {
+  const raw = rawOverride ?? (error instanceof Error ? error.message : String(error));
+  if (!raw.trim()) return '';
 
   const lines = raw
     .split('\n')
@@ -88,6 +86,14 @@ function captureOutput(py: PyodideInterface): string {
   }
 }
 
+function captureStderr(py: PyodideInterface): string {
+  try {
+    return String(py.runPython(CAPTURE_STDERR) ?? '');
+  } catch {
+    return '';
+  }
+}
+
 async function runCode(
   py: PyodideInterface,
   message: WorkerIncomingMessage
@@ -106,12 +112,13 @@ async function runCode(
     console.log('[Worker] Code executed successfully');
   } catch (error) {
     console.error('[Worker] Code execution error:', error);
+    const stderr = captureStderr(py);
     const output = captureOutput(py);
     ns.destroy();
     return {
       id,
       success: false,
-      error: extractErrorMessage(error),
+      error: extractErrorMessage(error, stderr || undefined),
       output,
     };
   }
@@ -130,12 +137,13 @@ async function runCode(
         console.error('[Worker] Error message:', error.message);
         console.error('[Worker] Error stack:', error.stack);
       }
+      const stderr = captureStderr(py);
       const output = captureOutput(py);
       ns.destroy();
       return {
         id,
         success: false,
-        error: extractErrorMessage(error),
+        error: extractErrorMessage(error, stderr || undefined),
         output,
       };
     }
