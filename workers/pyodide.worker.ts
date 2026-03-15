@@ -36,11 +36,16 @@ let pyodide: PyodideInterface | null = null;
 let pyodideLoadingPromise: Promise<PyodideInterface> | null = null;
 
 async function getPyodide(): Promise<PyodideInterface> {
-  if (pyodide !== null) return pyodide;
+  console.log('[Worker] Getting Pyodide instance...');
+  if (pyodide !== null) {
+    console.log('[Worker] Pyodide already loaded');
+    return pyodide;
+  }
 
   if (pyodideLoadingPromise !== null) return pyodideLoadingPromise;
 
   pyodideLoadingPromise = loadPyodide({ indexURL: PYODIDE_INDEX_URL }).then((instance) => {
+    console.log('[Worker] Pyodide loaded successfully');
     pyodide = instance;
     return instance;
   });
@@ -88,12 +93,15 @@ async function runCode(
   message: WorkerIncommingMessage
 ): Promise<WorkerResponse> {
   const { id, code, testCode } = message;
+  console.log('[Worker] Running code for ID:', id);
 
   py.runPython(REDIRECT_STDIO);
 
   try {
     await py.runPythonAsync(code);
+    console.log('[Worker] Code executed successfully');
   } catch (error) {
+    console.error('[Worker] Code execution error:', error);
     const output = captureOutput(py);
     return {
       id,
@@ -104,9 +112,19 @@ async function runCode(
   }
 
   if (testCode) {
+    console.log('[Worker] Running test code for ID:', id);
     try {
+      const studentCodeVar = `student_code = ${JSON.stringify(code)}`;
+      await py.runPythonAsync(studentCodeVar);
       await py.runPythonAsync(testCode);
+      console.log('[Worker] Tests passed');
     } catch (error) {
+      console.error('[Worker] Test failed:', error);
+      console.error('[Worker] Error object (JSON):', JSON.stringify(error, null, 2));
+      if (error instanceof Error) {
+        console.error('[Worker] Error message:', error.message);
+        console.error('[Worker] Error stack:', error.stack);
+      }
       const output = captureOutput(py);
       return {
         id,
@@ -123,6 +141,21 @@ async function runCode(
 
 self.onmessage = async (event: MessageEvent<WorkerIncommingMessage>): Promise<void> => {
   const { id, code, testCode } = event.data;
+  console.log('[Worker] Message received, ID:', id);
+
+  if (!code) {
+    console.log('[Worker] Initialization request received');
+    try {
+      await getPyodide();
+      self.postMessage({ type: 'ready' });
+    } catch (error) {
+      self.postMessage({
+        type: 'error',
+        error: `Failed to load Python runtime: ${extractErrorMessage(error)}`,
+      });
+    }
+    return;
+  }
 
   let py: PyodideInterface;
 
@@ -140,5 +173,6 @@ self.onmessage = async (event: MessageEvent<WorkerIncommingMessage>): Promise<vo
   }
 
   const response = await runCode(py, { id, code, testCode });
+  console.log('[Worker] Sending response:', response);
   self.postMessage(response);
 };

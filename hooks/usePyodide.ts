@@ -39,17 +39,22 @@ export function usePyodide(): UsePyodideReturn {
   const workerRef = useRef<Worker | null>(null);
   const pendingRef = useRef<Map<string, PendingCall>>(new Map());
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   function getOrCreateWorker(): Worker {
-    if (workerRef.current !== null) return workerRef.current;
+    console.log('[usePyodide] Creating/retrieving worker');
+    if (workerRef.current !== null) {
+      console.log('[usePyodide] Worker already exists');
+      return workerRef.current;
+    }
 
     const worker = new Worker(new URL('../workers/pyodide.worker.ts', import.meta.url), {
       type: 'module',
     });
 
     worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
+      console.log('[usePyodide] Message received:', event.data);
       const msg = event.data;
       const pending = pendingRef.current.get(msg.id);
 
@@ -71,9 +76,11 @@ export function usePyodide(): UsePyodideReturn {
           isTestFailure,
         });
       }
+      console.log('[usePyodide] Pending calls remaining:', pendingRef.current.size);
     };
 
     worker.onerror = (event: ErrorEvent) => {
+      console.error('[usePyodide] Worker error:', event.message);
       const errorMessage = event.message ?? 'Unknown worker error';
 
       for (const [id, pending] of pendingRef.current) {
@@ -96,6 +103,11 @@ export function usePyodide(): UsePyodideReturn {
   }
 
   useEffect(() => {
+    getOrCreateWorker();
+    console.log('[usePyodide] Sending initialization request');
+  }, []);
+
+  useEffect(() => {
     const worker = workerRef.current;
     const pending = pendingRef.current;
 
@@ -114,6 +126,10 @@ export function usePyodide(): UsePyodideReturn {
   }, []);
 
   const runCode = useCallback((code: string, testCode?: string): Promise<RunResult> => {
+    console.log('[usePyodide] runCode called with:', {
+      codeLength: code.length,
+      hasTestCode: !!testCode,
+    });
     return new Promise<RunResult>((resolve) => {
       const worker = getOrCreateWorker();
       const id = crypto.randomUUID();
