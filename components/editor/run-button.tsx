@@ -24,7 +24,7 @@ export default function RunButton({ onClick, isLoading }: RunButtonProps) {
       ) : (
         <>
           <span aria-hidden="true" className="ml-0.5 text-[#0D1117]/80">
-            ▶
+            ▶ Run
           </span>
         </>
       )}
