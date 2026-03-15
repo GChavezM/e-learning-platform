@@ -37,6 +37,7 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-surface-dark: var(--surface-dark);
+  --color-xp-gold: var(--xp-gold);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -81,6 +82,7 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --surface-dark: oklch(0.2579 0.0152 174.82);
   --grid-hero: oklch(0.3259 0.021 176.78 / 30%);
+  --xp-gold: oklch(0.82 0.165 85);
 }
 
 .dark {
@@ -117,6 +119,7 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
   --surface-dark: oklch(0.2579 0.0152 174.82);
   --grid-hero: oklch(0.3259 0.021 176.78 / 30%);
+  --xp-gold: oklch(0.86 0.18 88);
 }
 
 @layer base {
