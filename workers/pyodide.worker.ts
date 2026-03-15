@@ -11,7 +11,7 @@ sys.stderr = io.StringIO()
 
 const CAPTURE_STDOUT = `sys.stdout.getvalue()`;
 
-interface WorkerIncommingMessage {
+interface WorkerIncomingMessage {
   id: string;
   code: string;
   testCode?: string;
@@ -90,19 +90,24 @@ function captureOutput(py: PyodideInterface): string {
 
 async function runCode(
   py: PyodideInterface,
-  message: WorkerIncommingMessage
+  message: WorkerIncomingMessage
 ): Promise<WorkerResponse> {
   const { id, code, testCode } = message;
   console.log('[Worker] Running code for ID:', id);
 
   py.runPython(REDIRECT_STDIO);
 
+  const ns: ReturnType<typeof py.runPython> = py.runPython(
+    "{'__builtins__': __import__('builtins'), '__name__': '__main__'}"
+  );
+
   try {
-    await py.runPythonAsync(code);
+    await py.runPythonAsync(code, { globals: ns });
     console.log('[Worker] Code executed successfully');
   } catch (error) {
     console.error('[Worker] Code execution error:', error);
     const output = captureOutput(py);
+    ns.destroy();
     return {
       id,
       success: false,
@@ -115,8 +120,8 @@ async function runCode(
     console.log('[Worker] Running test code for ID:', id);
     try {
       const studentCodeVar = `student_code = ${JSON.stringify(code)}`;
-      await py.runPythonAsync(studentCodeVar);
-      await py.runPythonAsync(testCode);
+      await py.runPythonAsync(studentCodeVar, { globals: ns });
+      await py.runPythonAsync(testCode, { globals: ns });
       console.log('[Worker] Tests passed');
     } catch (error) {
       console.error('[Worker] Test failed:', error);
@@ -126,6 +131,7 @@ async function runCode(
         console.error('[Worker] Error stack:', error.stack);
       }
       const output = captureOutput(py);
+      ns.destroy();
       return {
         id,
         success: false,
@@ -136,10 +142,11 @@ async function runCode(
   }
 
   const output = captureOutput(py);
+  ns.destroy();
   return { id, success: true, output };
 }
 
-self.onmessage = async (event: MessageEvent<WorkerIncommingMessage>): Promise<void> => {
+self.onmessage = async (event: MessageEvent<WorkerIncomingMessage>): Promise<void> => {
   const { id, code, testCode } = event.data;
   console.log('[Worker] Message received, ID:', id);
 
