@@ -37,7 +37,7 @@ export default function PyodideLoadingOverlay({ isReady }: PyodideLoadingOverlay
 
           {/* Progress bar — .shimmer from globals.css */}
           <div
-            className="relative h-[3px] w-48 overflow-hidden rounded-full bg-[#1E2D3D]"
+            className="relative h-0.75 w-48 overflow-hidden rounded-full bg-[#1E2D3D]"
             aria-hidden="true"
           >
             <span className="shimmer absolute inset-0 -translate-x-full rounded-full bg-[linear-gradient(90deg,transparent_0%,#1DCD9E_50%,transparent_100%)]" />
