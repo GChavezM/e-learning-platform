@@ -107,10 +107,9 @@ export function usePyodide(): UsePyodideReturn {
           error: 'Component unmounted before execution completed.',
         });
       }
-        pending.clear();
-        worker?.terminate();
-        workerRef.current = null;
-      }
+      pending.clear();
+      worker?.terminate();
+      workerRef.current = null;
     };
   }, []);
 
