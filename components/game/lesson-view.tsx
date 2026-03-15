@@ -7,20 +7,29 @@ import { ArrowRight, BookOpen, Radio, Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState, useTransition } from 'react';
 import { toast } from 'sonner';
+import Markdown from 'react-markdown';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import CodeEditor from '../editor/code-editor';
 import OutputPanel from '../editor/output-panel';
 import RunButton from '../editor/run-button';
 import { Button } from '../ui/button';
 import PyodideLoadingOverlay from './pyodide-loading-overlay';
+import LessonNav from './lesson-nav';
 
 interface LessonViewProps {
   lesson: LessonWithChallengeAndChapter;
   userId: string;
   alreadyCompleted: boolean;
+  prevLesson: { id: string } | null;
+  nextLesson: { id: string } | null;
 }
 
-export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps) {
+export default function LessonView({
+  lesson,
+  alreadyCompleted,
+  prevLesson,
+  nextLesson,
+}: LessonViewProps) {
   const router = useRouter();
   const challenge = lesson.challenge;
   const chapter = lesson.chapter;
@@ -129,11 +138,9 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {/* TODO: Replace with <ReactMarkdown> once react-markdown is installed */}
-              <div
-                className="prose prose-invert prose-sm prose-headings:text-slate-100 prose-headings:font-semibold prose-code:rounded prose-code:bg-[#1e2d3d] prose-code:px-1 prose-code:py-0.5 prose-code:text-[#1DCD9E] prose-code:text-xs prose-code:font-mono prose-pre:bg-[#0B0F1A] prose-pre:border prose-pre:border-[#1e2d3d] prose-strong:text-slate-100 prose-a:text-[#1DCD9E] max-w-none text-slate-300"
-                dangerouslySetInnerHTML={{ __html: lesson.content }}
-              />
+              <div className="prose prose-invert prose-sm prose-headings:text-slate-100 prose-headings:font-semibold prose-code:rounded prose-code:bg-[#1e2d3d] prose-code:px-1 prose-code:py-0.5 prose-code:text-[#1DCD9E] prose-code:text-xs prose-code:font-mono prose-pre:bg-[#0B0F1A] prose-pre:border prose-pre:border-[#1e2d3d] prose-strong:text-slate-100 prose-a:text-[#1DCD9E] max-w-none text-slate-300">
+                <Markdown>{lesson.content}</Markdown>
+              </div>
             </CardContent>
           </Card>
 
@@ -151,7 +158,7 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
         </div>
 
         <div className="flex flex-col gap-4">
-          {challenge ? (
+          {challenge && (
             <>
               <Card className="border-[#1DCD9E]/25 bg-[#0B0F1A]">
                 <CardHeader className="pb-2">
@@ -220,39 +227,16 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
                   )}
                 </Button>
               )}
-
-              {alreadyCompleted && (
-                <Button
-                  onClick={() => router.push('/dashboard')}
-                  variant="outline"
-                  size="lg"
-                  className="w-full gap-2 border-[#1e2d3d] text-slate-400 hover:text-slate-200"
-                >
-                  Back to Dashboard
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              )}
             </>
-          ) : (
-            <Card className="flex flex-col items-center justify-center gap-4 border-[#1e2d3d] bg-[#0D1117] py-16 text-center">
-              <CardContent className="flex flex-col items-center gap-4">
-                <div className="text-5xl">🚀</div>
-                <p className="text-sm text-slate-400">
-                  No coding challenge for this lesson.
-                  <br />
-                  Read through the material and continue when ready.
-                </p>
-                <Button
-                  onClick={() => router.push('/dashboard')}
-                  size="lg"
-                  className="gap-2 bg-[#1DCD9E] font-semibold text-[#0D1117] hover:bg-[#17b589]"
-                >
-                  Continue to Next Lesson
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </CardContent>
-            </Card>
           )}
+
+          <LessonNav
+            currentLesson={{ id: lesson.id, chapterId: chapter.id, order: lesson.order }}
+            prevLesson={prevLesson}
+            nextLesson={nextLesson}
+            isCurrentCompleted={alreadyCompleted || hasSubmitted}
+            inline
+          />
         </div>
       </div>
     </div>
