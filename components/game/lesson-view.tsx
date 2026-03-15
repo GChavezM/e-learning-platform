@@ -35,7 +35,7 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
   const { runCode, isLoading, isReady } = usePyodide();
 
   const handleRun = useCallback(async () => {
-    if (isLoading || !code.trim()) return;
+    if (isLoading || !isReady || !code.trim()) return;
 
     setOutput(null);
     setError(null);
@@ -51,10 +51,10 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
       setError(null);
     } else {
       setIsCorrect(false);
-      setError(result.error ?? 'An unknown error occured');
+      setError(result.error ?? 'An unknown error occurred');
       setIsTestFailure(result.isTestFailure ?? false);
     }
-  }, [code, challenge, isLoading, runCode]);
+  }, [code, challenge, isLoading, isReady, runCode]);
 
   const handleSubmit = useCallback(() => {
     if (!challenge || hasSubmitted || isCorrect !== true) return;
@@ -182,7 +182,11 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
               />
 
               <div className="flex items-center justify-between gap-3">
-                <RunButton onClick={handleRun} isLoading={isLoading} />
+                <RunButton
+                  onClick={handleRun}
+                  isLoading={isLoading}
+                  disabled={!isReady || isLoading}
+                />
               </div>
 
               <OutputPanel

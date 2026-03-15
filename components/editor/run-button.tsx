@@ -6,13 +6,14 @@ import { Button } from '../ui/button';
 interface RunButtonProps {
   onClick: () => void;
   isLoading: boolean;
+  disabled?: boolean;
 }
 
-export default function RunButton({ onClick, isLoading }: RunButtonProps) {
+export default function RunButton({ onClick, isLoading, disabled }: RunButtonProps) {
   return (
     <Button
       onClick={onClick}
-      disabled={isLoading}
+      disabled={disabled}
       size="default"
       className="min-w-32.5 cursor-pointer bg-[#1DCD9E] font-semibold text-[#0D1117] shadow-[0_0_16px_rgba(29,205,158,0.35)] transition-all duration-200 hover:bg-[#17B589] hover:shadow-[0_0_22px_rgba(29,205,158,0.5)] active:scale-[0.97] disabled:cursor-not-allowed disabled:bg-[#1DCD9E]/60 disabled:opacity-100 disabled:shadow-none"
     >
