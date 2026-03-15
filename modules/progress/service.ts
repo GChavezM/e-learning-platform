@@ -54,7 +54,7 @@ async function completeLesson(userId: string, challengeId: string): Promise<{ xp
   });
 
   await Promise.all([
-    await recalculateLevel(userId),
+    recalculateLevel(userId),
     tryUnlockNextChapter(userId, chapterId, totalLessonsCount),
   ]);
 
