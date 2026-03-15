@@ -1,3 +1,6 @@
+import { loadPyodide } from 'pyodide';
+import type { PyodideInterface } from 'pyodide';
+
 const PYODIDE_INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v0.29.3/full/';
 
 const REDIRECT_STDIO = `
@@ -29,13 +32,6 @@ interface WorkerErrorResponse {
 
 type WorkerResponse = WorkerSuccessResponse | WorkerErrorResponse;
 
-interface PyodideInterface {
-  runPythonAsync(code: string): Promise<unknown>;
-  runPython(code: string): unknown;
-}
-
-declare function loadPyodide(options: { indexUrl: string }): Promise<PyodideInterface>;
-
 let pyodide: PyodideInterface | null = null;
 let pyodideLoadingPromise: Promise<PyodideInterface> | null = null;
 
@@ -44,7 +40,7 @@ async function getPyodide(): Promise<PyodideInterface> {
 
   if (pyodideLoadingPromise !== null) return pyodideLoadingPromise;
 
-  pyodideLoadingPromise = loadPyodide({ indexUrl: PYODIDE_INDEX_URL }).then((instance) => {
+  pyodideLoadingPromise = loadPyodide({ indexURL: PYODIDE_INDEX_URL }).then((instance) => {
     pyodide = instance;
     return instance;
   });
