@@ -154,10 +154,13 @@ self.onmessage = async (event: MessageEvent<WorkerIncomingMessage>): Promise<voi
     console.log('[Worker] Initialization request received');
     try {
       await getPyodide();
+      self.postMessage({ id, success: true, output: '' });
     } catch (error) {
       self.postMessage({
-        type: 'error',
+        id,
+        success: false,
         error: `Failed to load Python runtime: ${extractErrorMessage(error)}`,
+        output: '',
       });
     }
     return;

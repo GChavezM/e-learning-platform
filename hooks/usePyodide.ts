@@ -103,12 +103,12 @@ export function usePyodide(): UsePyodideReturn {
   }
 
   useEffect(() => {
-    getOrCreateWorker();
+    const worker = getOrCreateWorker();
+    const initId = '__init__';
+    pendingRef.current.set(initId, { resolve: () => {}, hasTestCode: false });
     console.log('[usePyodide] Sending initialization request');
-  }, []);
+    worker.postMessage({ id: initId, code: '' });
 
-  useEffect(() => {
-    const worker = workerRef.current;
     const pending = pendingRef.current;
 
     return () => {
@@ -120,7 +120,7 @@ export function usePyodide(): UsePyodideReturn {
         });
       }
       pending.clear();
-      worker?.terminate();
+      worker.terminate();
       workerRef.current = null;
     };
   }, []);
