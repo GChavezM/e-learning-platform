@@ -131,3 +131,9 @@ export async function getChallengeByLessonId(lessonId: string): Promise<Challeng
     where: { lessonId },
   });
 }
+
+export async function getAllLessons() {
+  return prisma.lesson.findMany({
+    select: { id: true, chapterId: true },
+  });
+}
