@@ -51,7 +51,7 @@ export default function LessonView({ lesson, alreadyCompleted }: LessonViewProps
       setError(null);
     } else {
       setIsCorrect(false);
-      setError(result.error ?? 'An unknown error occurred');
+      setError(result.error || 'An unknown error occurred');
       setIsTestFailure(result.isTestFailure ?? false);
     }
   }, [code, challenge, isLoading, isReady, runCode]);

@@ -17,7 +17,7 @@ function deriveVariant(props: Omit<OutputPanelProps, never>): PanelVariant {
 
   if (isLoading) return 'loading';
   if (isCorrect === true) return 'success';
-  if (isCorrect === false && isTestFailure) return 'testFailure';
+  if (isCorrect === false) return isTestFailure ? 'testFailure' : 'error';
   if (error) return 'error';
   if (output) return 'output';
   return 'idle';
