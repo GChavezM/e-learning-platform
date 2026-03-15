@@ -74,7 +74,6 @@ function extractErrorMessage(error: unknown): string {
       }
       return lines[i];
     }
-    return lines[i];
   }
 
   return lines[lines.length - 1] ?? raw;
