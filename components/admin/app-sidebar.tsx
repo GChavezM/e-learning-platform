@@ -39,6 +39,7 @@ export function AppSidebar() {
     const result = await signOutAction();
     if (!result.success) {
       toast.error(result.error);
+      return;
     }
 
     router.push('/sign-in');
