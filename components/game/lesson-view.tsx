@@ -19,10 +19,11 @@ import LessonNav from './lesson-nav';
 
 interface LessonViewProps {
   lesson: LessonWithChallengeAndChapter;
-  userId: string;
+  userId: string | null;
   alreadyCompleted: boolean;
   prevLesson: { id: string } | null;
   nextLesson: { id: string } | null;
+  isGuestMode?: boolean;
 }
 
 export default function LessonView({
@@ -30,6 +31,7 @@ export default function LessonView({
   alreadyCompleted,
   prevLesson,
   nextLesson,
+  isGuestMode = false,
 }: LessonViewProps) {
   const router = useRouter();
   const challenge = lesson.challenge;
@@ -220,17 +222,33 @@ export default function LessonView({
                 </div>
               </SpaceCard>
 
-              {/* Run Button with Shortcut */}
-              <div className="flex items-center justify-between gap-3">
-                <RunButton
-                  onClick={handleRun}
-                  isLoading={isLoading}
-                  disabled={!isReady || isLoading}
-                />
-                <span className="text-xs text-slate-500">
-                  Shortcut: <span className="font-mono text-slate-400">Ctrl+Enter</span>
-                </span>
-              </div>
+              {isGuestMode ? (
+                <SpaceCard className="border-[#1DCD9E]/40 bg-[#0B1421]/60 p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm text-slate-300">
+                      Want to run this mission and save your progress? Create a free account to
+                      unlock the full training experience.
+                    </p>
+                    <Button
+                      asChild
+                      className="bg-[#1DCD9E] font-semibold text-[#0D1117] hover:bg-[#17b589]"
+                    >
+                      <Link href="/sign-up">Create Free Account</Link>
+                    </Button>
+                  </div>
+                </SpaceCard>
+              ) : (
+                <div className="flex items-center justify-between gap-3">
+                  <RunButton
+                    onClick={handleRun}
+                    isLoading={isLoading}
+                    disabled={!isReady || isLoading}
+                  />
+                  <span className="text-xs text-slate-500">
+                    Shortcut: <span className="font-mono text-slate-400">Ctrl+Enter</span>
+                  </span>
+                </div>
+              )}
 
               {/* Output Panel */}
               <OutputPanel
@@ -267,14 +285,15 @@ export default function LessonView({
             </>
           )}
 
-          {/* Lesson Navigation */}
-          <LessonNav
-            currentLesson={{ id: lesson.id, chapterId: chapter.id, order: lesson.order }}
-            prevLesson={prevLesson}
-            nextLesson={nextLesson}
-            isCurrentCompleted={alreadyCompleted || hasSubmitted}
-            inline
-          />
+          {!isGuestMode && (
+            <LessonNav
+              currentLesson={{ id: lesson.id, chapterId: chapter.id, order: lesson.order }}
+              prevLesson={prevLesson}
+              nextLesson={nextLesson}
+              isCurrentCompleted={alreadyCompleted || hasSubmitted}
+              inline
+            />
+          )}
         </div>
       </div>
     </div>
