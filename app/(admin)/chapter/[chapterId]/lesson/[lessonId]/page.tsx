@@ -8,7 +8,7 @@ import {
   LessonSiblings,
   LessonWithChallengeAndChapter,
 } from '@/modules/course/queries';
-import { getLessonProgress } from '@/modules/progress/queries';
+import { getLessonProgress, getLastCorrectSubmission } from '@/modules/progress/queries';
 import { progressService } from '@/modules/progress/service';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
@@ -90,11 +90,19 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
       getLessonSibilings(chapterId, lesson.order),
     ]);
 
+  const alreadyCompleted = lessonProgress?.completed ?? false;
+
+  const submittedCode =
+    alreadyCompleted && lesson.challenge
+      ? ((await getLastCorrectSubmission(userId, lesson.challenge.id))?.code ?? null)
+      : null;
+
   return (
     <LessonView
       lesson={lesson}
       userId={userId}
-      alreadyCompleted={lessonProgress?.completed ?? false}
+      alreadyCompleted={alreadyCompleted}
+      submittedCode={submittedCode}
       prevLesson={prevLesson}
       nextLesson={nextLesson}
       isGuestMode={false}

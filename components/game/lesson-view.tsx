@@ -21,6 +21,7 @@ interface LessonViewProps {
   lesson: LessonWithChallengeAndChapter;
   userId: string | null;
   alreadyCompleted: boolean;
+  submittedCode?: string | null;
   prevLesson: { id: string } | null;
   nextLesson: { id: string } | null;
   isGuestMode?: boolean;
@@ -29,6 +30,7 @@ interface LessonViewProps {
 export default function LessonView({
   lesson,
   alreadyCompleted,
+  submittedCode,
   prevLesson,
   nextLesson,
   isGuestMode = false,
@@ -37,7 +39,9 @@ export default function LessonView({
   const challenge = lesson.challenge;
   const chapter = lesson.chapter;
 
-  const [code, setCode] = useState<string>(challenge?.starterCode ?? '');
+  const [code, setCode] = useState<string>(
+    alreadyCompleted && submittedCode ? submittedCode : (challenge?.starterCode ?? '')
+  );
   const [output, setOutput] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(alreadyCompleted ? true : null);

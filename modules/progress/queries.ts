@@ -54,3 +54,14 @@ export async function getUserStats(userId: string): Promise<UserStats | null> {
     where: { userId },
   });
 }
+
+export async function getLastCorrectSubmission(
+  userId: string,
+  challengeId: string
+): Promise<{ code: string } | null> {
+  return prisma.submission.findFirst({
+    where: { userId, challengeId, isCorrect: true },
+    orderBy: { submittedAt: 'desc' },
+    select: { code: true },
+  });
+}
