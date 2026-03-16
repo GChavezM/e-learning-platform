@@ -7,12 +7,14 @@ import Link from 'next/link';
 
 interface LessonRef {
   id: string;
+  slug: string;
 }
 
 interface CurrentLesson {
   id: string;
   order: number;
   chapterId: string;
+  chapterSlug: string;
 }
 
 interface LessonNavProps {
@@ -24,8 +26,8 @@ interface LessonNavProps {
   className?: string;
 }
 
-function lessonUrl(chapterId: string, lessonId: string) {
-  return `/chapter/${chapterId}/lesson/${lessonId}`;
+function lessonUrl(chapterSlug: string, lessonSlug: string) {
+  return `/chapter/${chapterSlug}/lesson/${lessonSlug}`;
 }
 
 function CompletedPip() {
@@ -54,7 +56,7 @@ export default function LessonNav({
   inline = false,
   className,
 }: LessonNavProps) {
-  const { chapterId, order } = currentLesson;
+  const { chapterSlug, order } = currentLesson;
 
   const showNext = !!nextLesson && isCurrentCompleted;
   const showChapterComplete = !nextLesson && isCurrentCompleted;
@@ -76,7 +78,7 @@ export default function LessonNav({
             size="sm"
             className="gap-2 border border-[#1e2d3d] text-slate-400 hover:border-slate-600 hover:bg-[#1e2d3d]/60 hover:text-slate-100"
           >
-            <Link href={lessonUrl(chapterId, prevLesson.id)}>
+            <Link href={lessonUrl(chapterSlug, prevLesson.slug)}>
               <ArrowLeft className="h-4 w-4 shrink-0" />
               <span className="hidden sm:inline">Previous</span>
             </Link>
@@ -98,7 +100,7 @@ export default function LessonNav({
             size="sm"
             className="gap-2 bg-[#1DCD9E] font-semibold text-[#0D1117] hover:bg-[#17b589]"
           >
-            <Link href={lessonUrl(chapterId, nextLesson!.id)}>
+            <Link href={lessonUrl(chapterSlug, nextLesson!.slug)}>
               <span className="hidden sm:inline">Next</span>
               <ArrowRight className="h-4 w-4 shrink-0" />
             </Link>

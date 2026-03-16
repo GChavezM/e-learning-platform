@@ -37,6 +37,7 @@ const PATH_D = buildPath();
 
 export interface MissionChapter {
   id: string;
+  slug: string;
   order: number;
   title: string;
   description: string;
@@ -263,7 +264,7 @@ function ChapterNode({
   const topPx = center.y - 40;
 
   const isClickable = status !== 'locked';
-  const href = `/chapter/${chapter.id}`;
+  const href = `/chapter/${chapter.slug}`;
 
   const nodeContent = (
     <>

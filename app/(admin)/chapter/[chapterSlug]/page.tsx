@@ -1,6 +1,6 @@
 import ChapterIntroView from '@/components/game/chapter-intro-view';
 import { auth } from '@/lib/auth';
-import { getChapterById, ChapterWithLessons } from '@/modules/course/queries';
+import { getChapterBySlug, ChapterWithLessons } from '@/modules/course/queries';
 import {
   getChapterProgress,
   getLessonProgress,
@@ -12,7 +12,7 @@ import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
 interface ChapterPageParams {
-  chapterId: string;
+  chapterSlug: string;
 }
 
 interface ChapterPageProps {
@@ -20,25 +20,25 @@ interface ChapterPageProps {
 }
 
 export default async function ChapterPage({ params }: ChapterPageProps) {
-  const { chapterId } = await params;
+  const { chapterSlug } = await params;
 
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) redirect('/sign-in');
 
   const userId = session.user.id;
 
-  const chapter: ChapterWithLessons | null = await getChapterById(chapterId);
+  const chapter: ChapterWithLessons | null = await getChapterBySlug(chapterSlug);
   if (!chapter) notFound();
 
   if (!chapter.isPublic) redirect('/dashboard');
 
-  const chapterUnlocked = await progressService.isChapterUnlocked(userId, chapterId);
+  const chapterUnlocked = await progressService.isChapterUnlocked(userId, chapter.id);
   if (!chapterUnlocked) redirect('/dashboard');
 
   const lessons = chapter.lessons;
 
   const [chapterProgress, ...lessonData] = await Promise.all([
-    getChapterProgress(userId, chapterId) as Promise<ChapterProgressSummary>,
+    getChapterProgress(userId, chapter.id) as Promise<ChapterProgressSummary>,
     ...lessons.map((lesson) =>
       Promise.all([
         progressService.isLessonUnlocked(userId, lesson.id),

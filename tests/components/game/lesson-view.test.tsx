@@ -107,6 +107,7 @@ describe('LessonView', () => {
   const lesson = {
     chapter: {
       id: 'chapter-1',
+      slug: 'python-basics',
       order: 1,
       storyText: 'Incoming mission briefing',
       title: 'Python Basics',
@@ -135,7 +136,7 @@ describe('LessonView', () => {
         alreadyCompleted={false}
         submittedCode={null}
         prevLesson={null}
-        nextLesson={{ id: 'lesson-2' }}
+        nextLesson={{ id: 'lesson-2', slug: 'lesson-two' }}
         userId={null}
         isGuestMode
       />
@@ -159,7 +160,7 @@ describe('LessonView', () => {
         alreadyCompleted={false}
         submittedCode={null}
         prevLesson={null}
-        nextLesson={{ id: 'lesson-2' }}
+        nextLesson={{ id: 'lesson-2', slug: 'lesson-two' }}
         userId={'user-1'}
       />
     );
@@ -199,7 +200,7 @@ describe('LessonView', () => {
         alreadyCompleted={false}
         submittedCode={null}
         prevLesson={null}
-        nextLesson={{ id: 'lesson-2' }}
+        nextLesson={{ id: 'lesson-2', slug: 'lesson-two' }}
         userId={'user-1'}
       />
     );
@@ -221,7 +222,7 @@ describe('LessonView', () => {
         alreadyCompleted
         submittedCode={'print("saved")'}
         prevLesson={null}
-        nextLesson={{ id: 'lesson-2' }}
+        nextLesson={{ id: 'lesson-2', slug: 'lesson-two' }}
         userId={'user-1'}
       />
     );

@@ -14,14 +14,19 @@ jest.mock('next/link', () => ({
 }));
 
 describe('LessonNav', () => {
-  const currentLesson = { chapterId: 'chapter-1', id: 'lesson-2', order: 2 };
+  const currentLesson = {
+    chapterId: 'chapter-1',
+    chapterSlug: 'python-basics',
+    id: 'lesson-2',
+    order: 2,
+  };
 
   it('renders the previous and next navigation when available and completed', () => {
     render(
       <LessonNav
         currentLesson={currentLesson}
-        prevLesson={{ id: 'lesson-1' }}
-        nextLesson={{ id: 'lesson-3' }}
+        prevLesson={{ id: 'lesson-1', slug: 'lesson-one' }}
+        nextLesson={{ id: 'lesson-3', slug: 'lesson-three' }}
         isCurrentCompleted={true}
         inline
       />
@@ -29,11 +34,11 @@ describe('LessonNav', () => {
 
     expect(screen.getByRole('link', { name: /Previous/i })).toHaveAttribute(
       'href',
-      '/chapter/chapter-1/lesson/lesson-1'
+      '/chapter/python-basics/lesson/lesson-one'
     );
     expect(screen.getByRole('link', { name: /Next/i })).toHaveAttribute(
       'href',
-      '/chapter/chapter-1/lesson/lesson-3'
+      '/chapter/python-basics/lesson/lesson-three'
     );
     expect(screen.getByText('#02')).toBeInTheDocument();
   });
@@ -42,8 +47,8 @@ describe('LessonNav', () => {
     render(
       <LessonNav
         currentLesson={currentLesson}
-        prevLesson={{ id: 'lesson-1' }}
-        nextLesson={{ id: 'lesson-3' }}
+        prevLesson={{ id: 'lesson-1', slug: 'lesson-one' }}
+        nextLesson={{ id: 'lesson-3', slug: 'lesson-three' }}
         isCurrentCompleted={false}
         inline
       />
@@ -56,7 +61,7 @@ describe('LessonNav', () => {
     render(
       <LessonNav
         currentLesson={currentLesson}
-        prevLesson={{ id: 'lesson-1' }}
+        prevLesson={{ id: 'lesson-1', slug: 'lesson-one' }}
         nextLesson={null}
         isCurrentCompleted={true}
         inline

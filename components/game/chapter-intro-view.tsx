@@ -16,8 +16,8 @@ interface ChapterIntroViewProps {
   lessons: AnnotatedLesson[];
 }
 
-function lessonUrl(chapterId: string, lessonId: string) {
-  return `/chapter/${chapterId}/lesson/${lessonId}`;
+function lessonUrl(chapterSlug: string, lessonSlug: string) {
+  return `/chapter/${chapterSlug}/lesson/${lessonSlug}`;
 }
 
 function getChapterEmoji(order: number): string {
@@ -33,13 +33,13 @@ function findResumeLesson(lessons: AnnotatedLesson[]): AnnotatedLesson | undefin
   return lessons.find((l) => l.isUnlocked && !l.isCompleted);
 }
 
-function LessonRow({ lesson, chapterId }: { lesson: AnnotatedLesson; chapterId: string }) {
+function LessonRow({ lesson, chapterSlug }: { lesson: AnnotatedLesson; chapterSlug: string }) {
   const isCompleted = lesson.isCompleted;
   const isUnlocked = lesson.isUnlocked;
 
   return (
     <Link
-      href={isUnlocked ? lessonUrl(chapterId, lesson.id) : '#'}
+      href={isUnlocked ? lessonUrl(chapterSlug, lesson.slug) : '#'}
       aria-disabled={!isUnlocked}
       tabIndex={isUnlocked ? undefined : -1}
       className={`group flex items-center gap-4 rounded-lg border border-[#1e2d3d] px-4 py-3.5 transition-all duration-200 ${
@@ -196,7 +196,7 @@ export default function ChapterIntroView({
         {/* Lesson List */}
         <div className="space-y-2">
           {lessons.map((lesson) => (
-            <LessonRow key={lesson.id} lesson={lesson} chapterId={chapter.id} />
+            <LessonRow key={lesson.id} lesson={lesson} chapterSlug={chapter.slug} />
           ))}
         </div>
 

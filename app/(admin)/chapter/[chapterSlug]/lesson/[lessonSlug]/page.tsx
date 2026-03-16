@@ -3,7 +3,7 @@ import { LessonProgress } from '@/generated/prisma/client';
 import { auth } from '@/lib/auth';
 import {
   getFirstPublicLessonRoute,
-  getLessonById,
+  getLessonBySlug,
   getLessonSibilings,
   LessonSiblings,
   LessonWithChallengeAndChapter,
@@ -14,8 +14,8 @@ import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
 interface LessonPageParams {
-  chapterId: string;
-  lessonId: string;
+  chapterSlug: string;
+  lessonSlug: string;
 }
 
 interface LessonPageProps {
@@ -24,7 +24,7 @@ interface LessonPageProps {
 }
 
 export default async function LessonPage({ params, searchParams }: LessonPageProps) {
-  const { chapterId, lessonId } = await params;
+  const { chapterSlug, lessonSlug } = await params;
   const { guest } = await searchParams;
   const isGuestMode = guest === '1';
 
@@ -44,22 +44,22 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
     }
 
     const isFirstLessonRoute =
-      firstLessonRoute.chapterId === chapterId && firstLessonRoute.lessonId === lessonId;
+      firstLessonRoute.chapterSlug === chapterSlug && firstLessonRoute.lessonSlug === lessonSlug;
 
     if (!isFirstLessonRoute) {
       redirect(
-        `/chapter/${firstLessonRoute.chapterId}/lesson/${firstLessonRoute.lessonId}?guest=1`
+        `/chapter/${firstLessonRoute.chapterSlug}/lesson/${firstLessonRoute.lessonSlug}?guest=1`
       );
     }
   }
 
-  const lesson: LessonWithChallengeAndChapter | null = await getLessonById(lessonId);
+  const lesson: LessonWithChallengeAndChapter | null = await getLessonBySlug(chapterSlug, lessonSlug);
 
   if (!lesson) {
     notFound();
   }
 
-  if (lesson.chapterId !== chapterId) {
+  if (lesson.chapter.slug !== chapterSlug) {
     notFound();
   }
 
@@ -78,7 +78,7 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
 
   const userId = session.user.id;
 
-  const unlocked = await progressService.isLessonUnlocked(userId, lessonId);
+  const unlocked = await progressService.isLessonUnlocked(userId, lesson.id);
 
   if (!unlocked) {
     redirect('/dashboard');
@@ -86,8 +86,8 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
 
   const [lessonProgress, { prevLesson, nextLesson }]: [LessonProgress | null, LessonSiblings] =
     await Promise.all([
-      getLessonProgress(userId, lessonId) as Promise<LessonProgress | null>,
-      getLessonSibilings(chapterId, lesson.order),
+      getLessonProgress(userId, lesson.id) as Promise<LessonProgress | null>,
+      getLessonSibilings(lesson.chapterId, lesson.order),
     ]);
 
   const alreadyCompleted = lessonProgress?.completed ?? false;

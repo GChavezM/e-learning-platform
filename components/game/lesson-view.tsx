@@ -22,8 +22,8 @@ interface LessonViewProps {
   userId: string | null;
   alreadyCompleted: boolean;
   submittedCode?: string | null;
-  prevLesson: { id: string } | null;
-  nextLesson: { id: string } | null;
+  prevLesson: { id: string; slug: string } | null;
+  nextLesson: { id: string; slug: string } | null;
   isGuestMode?: boolean;
 }
 
@@ -122,7 +122,7 @@ export default function LessonView({
             </Link>
             <span>/</span>
             <Link
-              href={`/chapter/${chapter.id}`}
+              href={`/chapter/${chapter.slug}`}
               className="transition-colors hover:text-[#1DCD9E]"
             >
               Chapter {chapter.order}
@@ -248,9 +248,6 @@ export default function LessonView({
                     isLoading={isLoading}
                     disabled={!isReady || isLoading}
                   />
-                  <span className="text-xs text-slate-500">
-                    Shortcut: <span className="font-mono text-slate-400">Ctrl+Enter</span>
-                  </span>
                 </div>
               )}
 
@@ -291,7 +288,12 @@ export default function LessonView({
 
           {!isGuestMode && (
             <LessonNav
-              currentLesson={{ id: lesson.id, chapterId: chapter.id, order: lesson.order }}
+              currentLesson={{
+                id: lesson.id,
+                chapterId: chapter.id,
+                chapterSlug: chapter.slug,
+                order: lesson.order,
+              }}
               prevLesson={prevLesson}
               nextLesson={nextLesson}
               isCurrentCompleted={alreadyCompleted || hasSubmitted}

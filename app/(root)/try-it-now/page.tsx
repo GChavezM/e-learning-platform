@@ -8,5 +8,7 @@ export default async function TryItNowPage() {
     notFound();
   }
 
-  redirect(`/chapter/${firstLessonRoute.chapterId}/lesson/${firstLessonRoute.lessonId}?guest=1`);
+  redirect(
+    `/chapter/${firstLessonRoute.chapterSlug}/lesson/${firstLessonRoute.lessonSlug}?guest=1`
+  );
 }
