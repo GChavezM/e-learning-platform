@@ -5,8 +5,9 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/$1',
   },
   roots: ['<rootDir>/tests'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup/jest.setup.ts'],
   testEnvironment: 'node',
-  testMatch: ['**/tests/**/*.test.ts'],
+  testMatch: ['**/tests/**/*.test.ts', '**/tests/**/*.test.tsx'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
   transform: {
     '^.+\\.(ts|tsx)$': [
