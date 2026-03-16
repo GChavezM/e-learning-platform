@@ -45,6 +45,11 @@ export type { Challenge };
 
 export type LessonRef = { id: string };
 
+export type LessonRouteRef = {
+  chapterId: string;
+  lessonId: string;
+};
+
 export type LessonSiblings = {
   prevLesson: LessonRef | null;
   nextLesson: LessonRef | null;
@@ -136,4 +141,30 @@ export async function getAllLessons() {
   return prisma.lesson.findMany({
     select: { id: true, chapterId: true },
   });
+}
+
+export async function getFirstPublicLessonRoute(): Promise<LessonRouteRef | null> {
+  const chapter = await prisma.chapter.findFirst({
+    where: { isPublic: true },
+    orderBy: { order: 'asc' },
+    select: {
+      id: true,
+      lessons: {
+        orderBy: { order: 'asc' },
+        select: { id: true },
+        take: 1,
+      },
+    },
+  });
+
+  const firstLesson = chapter?.lessons[0];
+
+  if (!chapter || !firstLesson) {
+    return null;
+  }
+
+  return {
+    chapterId: chapter.id,
+    lessonId: firstLesson.id,
+  };
 }
