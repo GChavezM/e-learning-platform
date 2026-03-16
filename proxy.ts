@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const isGuestMode = request.nextUrl.searchParams.get('guest') === '1';
 
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -22,7 +23,14 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-guest-mode', isGuestMode ? '1' : '0');
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {
