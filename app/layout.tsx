@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { spaceGrotesk } from '@/lib/fonts';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
@@ -14,10 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${spaceGrotesk.className} text-slate-900 antialiased dark:text-slate-100`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${spaceGrotesk.className} antialiased`}>
+        <ThemeProvider>
+          {children}
           <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
