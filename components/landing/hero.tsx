@@ -26,7 +26,7 @@ export default function Hero() {
           while building coding skills in Python one step at a time.
         </p>
 
-        <div className="mt-4 flex w-full justify-center">
+        <div className="mt-4 flex w-full flex-col items-center gap-3">
           <Button
             size="lg"
             className="bg-primary text-background flex h-12 transform items-center gap-2 rounded-lg px-8 text-base font-bold shadow-[0_0_20px_rgba(29,205,158,0.4)] transition-all hover:scale-105 hover:bg-emerald-400 sm:h-14 sm:text-lg"
@@ -36,6 +36,15 @@ export default function Hero() {
               <Rocket className="h-5 w-5" />
               Start Your Mission
             </Link>
+          </Button>
+
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-[#1DCD9E]/70 bg-[#0B1421]/70 px-8 font-semibold text-[#1DCD9E] hover:bg-[#0B1421] hover:text-emerald-300"
+            asChild
+          >
+            <Link href="/try-it-now">Try It Now</Link>
           </Button>
         </div>
       </div>
