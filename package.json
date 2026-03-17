@@ -12,7 +12,8 @@
     "prettier:check": "prettier --check .",
     "prisma:migrate:example": "prisma migrate dev --name migration_name",
     "prisma:generate": "prisma generate",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@codemirror/lang-python": "^6.2.1",
