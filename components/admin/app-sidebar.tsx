@@ -24,12 +24,12 @@ export function AppSidebar() {
 
   const navItems = [
     {
-      label: 'Dashboard',
+      label: 'Panel',
       href: '/dashboard',
       icon: LayoutDashboard,
     },
     {
-      label: 'Profile',
+      label: 'Perfil',
       href: '/profile',
       icon: User,
     },
@@ -102,7 +102,7 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton onClick={handleSignOut}>
               <LogOut />
-              <span>Sign Out</span>
+              <span>Cerrar sesion</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

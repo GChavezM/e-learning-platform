@@ -40,10 +40,10 @@ describe('SignInForm', () => {
   it('renders the expected fields and navigation link', () => {
     render(<SignInForm />);
 
-    expect(screen.getByLabelText('Email')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Register new account' })).toHaveAttribute(
+    expect(screen.getByLabelText('Correo electronico')).toBeInTheDocument();
+    expect(screen.getByLabelText('Contrasena')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Iniciar sesion' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Crear cuenta nueva' })).toHaveAttribute(
       'href',
       '/sign-up'
     );
@@ -54,15 +54,15 @@ describe('SignInForm', () => {
 
     render(<SignInForm />);
 
-    const passwordInput = screen.getByLabelText('Password');
-    const toggleButton = screen.getByRole('button', { name: 'Show password' });
+    const passwordInput = screen.getByLabelText('Contrasena');
+    const toggleButton = screen.getByRole('button', { name: 'Mostrar contrasena' });
 
     expect(passwordInput).toHaveAttribute('type', 'password');
 
     await user.click(toggleButton);
     expect(passwordInput).toHaveAttribute('type', 'text');
 
-    await user.click(screen.getByRole('button', { name: 'Hide password' }));
+    await user.click(screen.getByRole('button', { name: 'Ocultar contrasena' }));
     expect(passwordInput).toHaveAttribute('type', 'password');
   });
 
@@ -71,12 +71,12 @@ describe('SignInForm', () => {
 
     render(<SignInForm />);
 
-    const emailInput = screen.getByLabelText('Email');
+    const emailInput = screen.getByLabelText('Correo electronico');
     await user.type(emailInput, 'invalid-email');
     await user.tab();
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Please enter a valid email address'
+      'Ingresa una direccion de correo valida'
     );
     expect(signInAction).not.toHaveBeenCalled();
   });
@@ -87,9 +87,9 @@ describe('SignInForm', () => {
 
     render(<SignInForm />);
 
-    await user.type(screen.getByLabelText('Email'), 'pilot@example.com');
-    await user.type(screen.getByLabelText('Password'), 'Secret123');
-    await user.click(screen.getByRole('button', { name: 'Sign In' }));
+    await user.type(screen.getByLabelText('Correo electronico'), 'pilot@example.com');
+    await user.type(screen.getByLabelText('Contrasena'), 'Secret123');
+    await user.click(screen.getByRole('button', { name: 'Iniciar sesion' }));
 
     await waitFor(() => {
       expect(signInAction).toHaveBeenCalledWith({
@@ -104,16 +104,16 @@ describe('SignInForm', () => {
 
   it('shows a toast error when the action fails', async () => {
     const user = userEvent.setup();
-    signInAction.mockResolvedValue({ error: 'Invalid credentials', success: false });
+    signInAction.mockResolvedValue({ error: 'Credenciales invalidas', success: false });
 
     render(<SignInForm />);
 
-    await user.type(screen.getByLabelText('Email'), 'pilot@example.com');
-    await user.type(screen.getByLabelText('Password'), 'Secret123');
-    await user.click(screen.getByRole('button', { name: 'Sign In' }));
+    await user.type(screen.getByLabelText('Correo electronico'), 'pilot@example.com');
+    await user.type(screen.getByLabelText('Contrasena'), 'Secret123');
+    await user.click(screen.getByRole('button', { name: 'Iniciar sesion' }));
 
     await waitFor(() => {
-      expect(toastError).toHaveBeenCalledWith('Invalid credentials');
+      expect(toastError).toHaveBeenCalledWith('Credenciales invalidas');
     });
 
     expect(push).not.toHaveBeenCalled();

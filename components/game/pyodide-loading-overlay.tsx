@@ -11,7 +11,7 @@ export default function PyodideLoadingOverlay({ isReady }: PyodideLoadingOverlay
     <>
       <div
         role="status"
-        aria-label="Loading Python engine"
+        aria-label="Cargando motor de Python"
         aria-live="polite"
         className="absolute inset-0 z-10 flex flex-col items-center justify-center overflow-hidden rounded-lg bg-[radial-gradient(ellipse_at_50%_40%,#0D1B2A,@060B12_70%,#020508_100%)] backdrop-blur-[2px]"
       >
@@ -32,7 +32,7 @@ export default function PyodideLoadingOverlay({ isReady }: PyodideLoadingOverlay
           </div>
 
           <p className="animate-pulse font-mono text-sm font-semibold tracking-[0.2em] text-[#1DCD9E] uppercase">
-            Loading Python engine...
+            Cargando motor de Python...
           </p>
 
           {/* Progress bar — .shimmer from globals.css */}
@@ -45,7 +45,7 @@ export default function PyodideLoadingOverlay({ isReady }: PyodideLoadingOverlay
 
           {/* Sub-label */}
           <p className="font-mono text-xs tracking-widest text-[#3D5568] uppercase">
-            Preparing mission systems
+            Preparando sistemas de misión
           </p>
         </div>
       </div>

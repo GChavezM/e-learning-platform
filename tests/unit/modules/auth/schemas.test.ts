@@ -26,7 +26,9 @@ describe('signUpSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Name can only contain letters and spaces');
+    expect(result.error?.issues[0]?.message).toBe(
+      'El nombre solo puede contener letras y espacios'
+    );
   });
 
   it('rejects passwords shorter than 8 characters', () => {
@@ -38,21 +40,21 @@ describe('signUpSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Password must be at least 8 characters');
+    expect(result.error?.issues[0]?.message).toBe('La contrasena debe tener al menos 8 caracteres');
   });
 
   it('rejects passwords without lowercase, uppercase, or numbers', () => {
     const cases = [
       {
-        message: 'Password must contain at least one lowercase letter',
+        message: 'La contrasena debe incluir al menos una letra minuscula',
         password: 'PASSWORD1',
       },
       {
-        message: 'Password must contain at least one uppercase letter',
+        message: 'La contrasena debe incluir al menos una letra mayuscula',
         password: 'password1',
       },
       {
-        message: 'Password must contain at least one number',
+        message: 'La contrasena debe incluir al menos un numero',
         password: 'Password',
       },
     ];
@@ -79,7 +81,7 @@ describe('signUpSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Passwords do not match');
+    expect(result.error?.issues[0]?.message).toBe('Las contrasenas no coinciden');
     expect(result.error?.issues[0]?.path).toEqual(['confirmPassword']);
   });
 });
@@ -104,7 +106,7 @@ describe('signInSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Please enter a valid email address');
+    expect(result.error?.issues[0]?.message).toBe('Ingresa una direccion de correo valida');
   });
 
   it('rejects an empty password after trimming', () => {

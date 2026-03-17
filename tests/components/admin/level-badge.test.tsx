@@ -7,7 +7,7 @@ describe('LevelBadge', () => {
   it('renders the level as an accessible image label', () => {
     render(<LevelBadge level={4} />);
 
-    expect(screen.getByRole('img', { name: 'Level 4' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Nivel 4' })).toBeInTheDocument();
     expect(screen.getByText('LVL')).toBeInTheDocument();
     expect(screen.getByText('4')).toBeInTheDocument();
   });
@@ -15,7 +15,7 @@ describe('LevelBadge', () => {
   it('uses the cyan tier for early levels', () => {
     render(<LevelBadge level={2} />);
 
-    expect(screen.getByRole('img', { name: 'Level 2' })).toHaveStyle({
+    expect(screen.getByRole('img', { name: 'Nivel 2' })).toHaveStyle({
       '--lvl-color': 'var(--primary)',
     });
   });
@@ -23,7 +23,7 @@ describe('LevelBadge', () => {
   it('uses the purple tier for mid levels', () => {
     render(<LevelBadge level={5} />);
 
-    expect(screen.getByRole('img', { name: 'Level 5' })).toHaveStyle({
+    expect(screen.getByRole('img', { name: 'Nivel 5' })).toHaveStyle({
       '--lvl-color': 'var(--lvl-purple)',
     });
   });
@@ -31,7 +31,7 @@ describe('LevelBadge', () => {
   it('uses the gold tier for high levels', () => {
     render(<LevelBadge level={8} />);
 
-    expect(screen.getByRole('img', { name: 'Level 8' })).toHaveStyle({
+    expect(screen.getByRole('img', { name: 'Nivel 8' })).toHaveStyle({
       '--lvl-color': 'var(--xp-gold)',
     });
   });

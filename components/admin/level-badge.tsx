@@ -29,7 +29,7 @@ export function LevelBadge({ level, className }: LevelBadgeProps) {
     <div
       className={cn('relative inline-flex h-16 w-16 items-center justify-center', className)}
       style={cssVars}
-      aria-label={`Level ${level}`}
+      aria-label={`Nivel ${level}`}
       role="img"
     >
       <div

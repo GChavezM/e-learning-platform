@@ -13,7 +13,7 @@ async function signIn(
     });
     return Result.ok();
   } catch {
-    return Result.fail('Invalid email or password.');
+    return Result.fail('Correo o contrasena invalidos.');
   }
 }
 
@@ -30,9 +30,9 @@ async function signUp(
   } catch (error) {
     const message = error instanceof Error ? error.message : '';
     if (message.toLowerCase().includes('already exists')) {
-      return Result.fail('An account with that email already exists.');
+      return Result.fail('Ya existe una cuenta con ese correo.');
     }
-    return Result.fail('Could not create account. Please try again.');
+    return Result.fail('No se pudo crear la cuenta. Intentalo de nuevo.');
   }
 }
 
@@ -43,7 +43,7 @@ async function signOut(requestHeaders: Headers): Promise<Result<void, string>> {
     });
     return Result.ok();
   } catch {
-    return Result.fail('Could not sign out. Please try again.');
+    return Result.fail('No se pudo cerrar sesion. Intentalo de nuevo.');
   }
 }
 

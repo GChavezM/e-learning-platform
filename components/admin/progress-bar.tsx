@@ -23,7 +23,7 @@ export function ProgressBar({ current, max, label, className }: ProgressBarProps
       aria-valuenow={current}
       aria-valuemin={0}
       aria-valuemax={max}
-      aria-label={label ?? 'XP Progress'}
+      aria-label={label ?? 'Progreso de XP'}
     >
       <div className="flex items-baseline justify-between">
         {label && (

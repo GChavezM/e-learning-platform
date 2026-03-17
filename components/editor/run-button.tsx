@@ -20,12 +20,12 @@ export default function RunButton({ onClick, isLoading, disabled }: RunButtonPro
       {isLoading ? (
         <>
           <Loader2 className="size-4 animate-spin" />
-          Running...
+          Ejecutando...
         </>
       ) : (
         <>
           <span aria-hidden="true" className="ml-0.5 text-[#0D1117]/80">
-            ▶ Run
+            ▶ Ejecutar
           </span>
         </>
       )}

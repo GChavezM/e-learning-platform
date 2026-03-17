@@ -48,7 +48,7 @@ describe('submissionSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Code cannot be empty');
+    expect(result.error?.issues[0]?.message).toBe('El codigo no puede estar vacio');
   });
 
   it('rejects code longer than the configured limit', () => {
@@ -59,6 +59,6 @@ describe('submissionSchema', () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Code is too long');
+    expect(result.error?.issues[0]?.message).toBe('El codigo es demasiado largo');
   });
 });

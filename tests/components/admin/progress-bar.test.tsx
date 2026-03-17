@@ -20,7 +20,7 @@ describe('ProgressBar', () => {
   it('falls back to the default accessible label when none is provided', () => {
     render(<ProgressBar current={50} max={100} />);
 
-    expect(screen.getByRole('progressbar', { name: 'XP Progress' })).toBeInTheDocument();
+    expect(screen.getByRole('progressbar', { name: 'Progreso de XP' })).toBeInTheDocument();
   });
 
   it('clamps invalid values instead of rendering a negative or overflowing width', () => {

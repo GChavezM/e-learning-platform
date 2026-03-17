@@ -72,7 +72,7 @@ export default function LessonView({
       setError(null);
     } else {
       setIsCorrect(false);
-      setError(result.error || 'An unknown error occurred');
+      setError(result.error || 'Ocurrio un error desconocido');
       setIsTestFailure(result.isTestFailure ?? false);
     }
   }, [code, challenge, isLoading, isReady, runCode]);
@@ -89,14 +89,14 @@ export default function LessonView({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? 'Submission failed. Please try again');
+        toast.error(result.error ?? 'El envio falló. Intentalo de nuevo');
         return;
       }
 
       setHasSubmitted(true);
 
       if (result.xpAwarded) {
-        toast.success(`+${result.xpAwarded} XP earned! Mission objective logged`);
+        toast.success(`+${result.xpAwarded} XP ganados. Objetivo de misión registrado`);
       }
 
       const redirectUrl = nextLesson ? lessonUrl(chapter.slug, nextLesson.slug) : '/dashboard';
@@ -112,7 +112,7 @@ export default function LessonView({
         <div className="border-b border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
           <div className="mx-auto flex max-w-screen-2xl items-center gap-2 text-sm font-semibold text-emerald-400">
             <Check className="h-4 w-4" />
-            Mission Complete ✅ — You can still run and modify your code
+            Misión completada ✅ — Aún puedes ejecutar y modificar tu código
           </div>
         </div>
       )}
@@ -124,14 +124,14 @@ export default function LessonView({
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400">
             <Link href="/dashboard" className="transition-colors hover:text-[#1DCD9E]">
-              Dashboard
+              Panel
             </Link>
             <span>/</span>
             <Link
               href={`/chapter/${chapter.slug}`}
               className="transition-colors hover:text-[#1DCD9E]"
             >
-              Chapter {chapter.order}
+              Capitulo {chapter.order}
             </Link>
             <span>/</span>
             <span className="text-slate-200">{lesson.title}</span>
@@ -140,7 +140,7 @@ export default function LessonView({
           {/* Chapter Badge & Title */}
           <div className="flex flex-col gap-3">
             <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#1DCD9E]/40 bg-[#1DCD9E]/10 px-3 py-1.5 text-xs font-bold tracking-widest text-[#1DCD9E] uppercase">
-              Chapter {chapter.order} — {chapter.title}
+              Capitulo {chapter.order} — {chapter.title}
             </span>
             <h1 className="font-space-grotesk bg-linear-to-r from-[#1DCD9E] to-cyan-400 bg-clip-text text-3xl font-bold text-transparent lg:text-4xl">
               {lesson.title}
@@ -152,7 +152,7 @@ export default function LessonView({
             <div className="relative z-10 flex items-center gap-2">
               <span className="text-lg">📡</span>
               <h2 className="text-xs font-bold tracking-wide text-[#1DCD9E] uppercase">
-                Incoming Transmission
+                Transmisión entrante
               </h2>
             </div>
             <p className="typewriter relative z-10 text-sm leading-relaxed text-slate-200 italic">
@@ -170,12 +170,12 @@ export default function LessonView({
           {/* XP Badge */}
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FFD700]/30 bg-[#FFD700]/10 px-3 py-1.5 text-xs font-bold text-[#FFD700]">
-              <Star className="h-3.5 w-3.5 fill-[#FFD700]" />+{lesson.xpReward} XP on completion
+              <Star className="h-3.5 w-3.5 fill-[#FFD700]" />+{lesson.xpReward} XP al completar
             </span>
             {alreadyCompleted && (
               <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-emerald-400">
                 <Check className="h-3.5 w-3.5" />
-                Completed
+                Completado
               </span>
             )}
           </div>
@@ -190,7 +190,7 @@ export default function LessonView({
                 <div className="flex items-center gap-2 border-b-2 border-[#1DCD9E] pb-3">
                   <span className="text-lg">🎯</span>
                   <h2 className="text-sm font-bold tracking-wide text-[#1DCD9E] uppercase">
-                    Mission Objective
+                    Objetivo de misión
                   </h2>
                 </div>
 
@@ -207,7 +207,7 @@ export default function LessonView({
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DCD9E] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1DCD9E]/50" />
                   </span>
-                  Initialising Python runtime…
+                  Inicializando entorno de Python…
                 </div>
               )}
 
@@ -236,14 +236,14 @@ export default function LessonView({
                 <SpaceCard className="border-[#1DCD9E]/40 bg-[#0B1421]/60 p-4">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-slate-300">
-                      Want to run this mission and save your progress? Create a free account to
-                      unlock the full training experience.
+                      Quieres ejecutar esta misión y guardar tu progreso? Crea una cuenta gratuita
+                      para desbloquear la experiencia completa de entrenamiento.
                     </p>
                     <Button
                       asChild
                       className="bg-[#1DCD9E] font-semibold text-[#0D1117] hover:bg-[#17b589]"
                     >
-                      <Link href="/sign-up">Create Free Account</Link>
+                      <Link href="/sign-up">Crear cuenta gratis</Link>
                     </Button>
                   </div>
                 </SpaceCard>
@@ -275,15 +275,15 @@ export default function LessonView({
                   className="w-full gap-2 bg-linear-to-r from-emerald-500 to-emerald-600 font-semibold text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] disabled:opacity-60"
                 >
                   {isSubmitting ? (
-                    'Logging mission data…'
+                    'Registrando datos de la misión…'
                   ) : hasSubmitted ? (
                     <>
                       <Check className="h-4 w-4" />
-                      Submitted
+                      Enviado
                     </>
                   ) : (
                     <>
-                      Submit & Continue
+                      Enviar y continuar
                       <ArrowRight className="h-4 w-4" />
                     </>
                   )}

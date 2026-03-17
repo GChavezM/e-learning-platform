@@ -46,7 +46,7 @@ export async function submitChallengeAction(rawData: unknown): Promise<Submissio
   } catch {
     return {
       success: false,
-      error: 'Invalid submission data',
+      error: 'Datos de envio invalidos',
       code: 'INVALID_SUBMISSION',
       status: 400,
     };
@@ -77,6 +77,6 @@ export async function submitChallengeAction(rawData: unknown): Promise<Submissio
       return { success: true, isCorrect, xpAwarded };
     });
   } catch (error) {
-    return mapProgressAccessError(error) ?? { success: false, error: 'Submission failed' };
+    return mapProgressAccessError(error) ?? { success: false, error: 'El envio fallo' };
   }
 }

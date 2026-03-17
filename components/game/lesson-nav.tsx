@@ -42,7 +42,7 @@ function CompletedPip() {
 function LessonBreadcrumb({ order }: { order: number }) {
   return (
     <span className="flex items-center gap-2 text-xs text-slate-500 tabular-nums">
-      <span className="hidden sm:inline">Mission</span>
+      <span className="hidden sm:inline">Misión</span>
       <span className="font-mono text-slate-400">#{String(order).padStart(2, '0')}</span>
     </span>
   );
@@ -63,7 +63,7 @@ export default function LessonNav({
 
   return (
     <nav
-      aria-label="Lesson navigation"
+      aria-label="Navegacion de lecciones"
       className={cn(
         'z-50 flex items-center justify-between gap-4 border-t border-[#1e2d3d] bg-[#0B0F1A]/95 px-4 py-3 backdrop-blur-sm sm:px-6',
         inline ? 'mt-4 rounded-xl border border-[#1e2d3d]' : 'fixed right-0 bottom-0 left-0',
@@ -80,7 +80,7 @@ export default function LessonNav({
           >
             <Link href={lessonUrl(chapterSlug, prevLesson.slug)}>
               <ArrowLeft className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Previous</span>
+              <span className="hidden sm:inline">Anterior</span>
             </Link>
           </Button>
         ) : (
@@ -101,7 +101,7 @@ export default function LessonNav({
             className="gap-2 bg-[#1DCD9E] font-semibold text-[#0D1117] hover:bg-[#17b589]"
           >
             <Link href={lessonUrl(chapterSlug, nextLesson!.slug)}>
-              <span className="hidden sm:inline">Next</span>
+              <span className="hidden sm:inline">Siguiente</span>
               <ArrowRight className="h-4 w-4 shrink-0" />
             </Link>
           </Button>
@@ -120,7 +120,7 @@ export default function LessonNav({
           >
             <Link href="/dashboard">
               <MapIcon className="h-4 w-4 shrink-0" />
-              <span>Chapter Complete! Back to Map</span>
+              <span>Capitulo completado. Volver al mapa</span>
             </Link>
           </Button>
         )}

@@ -85,14 +85,14 @@ function MapHeader({ stats }: MapHeaderProps) {
           </span>
           <span className="h-px flex-1 bg-[#1e2d3d]" aria-hidden />
           <span className="font-mono text-[10px] tracking-wider text-slate-600 uppercase">
-            Mission Map
+            Mapa de misión
           </span>
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] text-slate-500 uppercase">
-              Welcome back, Cadet
+              Bienvenido de vuelta, cadete
             </p>
             <h1 className="mt-0.5 text-xl font-bold text-slate-100">{firstName}</h1>
           </div>
@@ -105,13 +105,13 @@ function MapHeader({ stats }: MapHeaderProps) {
 
         {isMaxLevel ? (
           <p className="font-mono text-xs font-semibold tracking-widest text-[#FFD040] uppercase">
-            ⭐ Max Level Reached — Commander Status
+            ⭐ Nivel máximo alcanzado — Estado comandante
           </p>
         ) : (
           <ProgressBar
             current={xpInLevel}
             max={XP_PER_LEVEL}
-            label={`XP to Level ${stats.level + 1}`}
+            label={`XP para nivel ${stats.level + 1}`}
           />
         )}
       </div>
@@ -123,7 +123,7 @@ function StatusBadge({ status }: { status: NodeStatus }) {
   if (status === 'complete') {
     return (
       <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest text-emerald-400 uppercase">
-        ✓ Complete
+        ✓ Completado
       </span>
     );
   }
@@ -131,14 +131,14 @@ function StatusBadge({ status }: { status: NodeStatus }) {
     return (
       <span className="inline-flex items-center gap-1 rounded-full border border-[#1DCD9E]/30 bg-[#1DCD9E]/10 px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest text-[#1DCD9E] uppercase">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#1DCD9E]" aria-hidden />
-        In Progress
+        En progreso
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1 rounded-full border border-slate-700/60 bg-slate-800/50 px-2 py-0.5 font-mono text-[9px] font-bold tracking-widest text-slate-600 uppercase">
       <Lock className="h-2.5 w-2.5" aria-hidden />
-      Locked
+      Bloqueado
     </span>
   );
 }
@@ -230,7 +230,7 @@ function NodeInfo({ chapter, status }: NodeInfoProps) {
 
       {status !== 'locked' && (
         <p className="font-mono text-[10px] text-slate-500 tabular-nums">
-          {chapter.completedLessons}/{chapter.totalLessons} lessons
+          {chapter.completedLessons}/{chapter.totalLessons} lecciones
         </p>
       )}
 
@@ -295,7 +295,7 @@ function ChapterNode({
           'hover:-translate-y-1'
         )}
         style={sharedStyle}
-        aria-label={`Chapter ${chapter.order}: ${chapter.title} — ${status}`}
+        aria-label={`Capitulo ${chapter.order}: ${chapter.title} — ${status}`}
       >
         {nodeContent}
       </Link>
@@ -306,7 +306,7 @@ function ChapterNode({
     <div
       className={cn(sharedWrapperClass, 'cursor-not-allowed')}
       style={sharedStyle}
-      aria-label={`Chapter ${chapter.order}: ${chapter.title} — locked`}
+      aria-label={`Capitulo ${chapter.order}: ${chapter.title} — bloqueado`}
     >
       <div
         className="pointer-events-none absolute inset-0 z-10 flex items-start justify-center pt-5"
@@ -356,7 +356,7 @@ function ConnectingPath({ bgRef, fgRef }: ConnectingPathProps) {
 }
 
 export default function MissionMap({ chapters, userStats }: MissionMapProps) {
-  const stats = userStats ?? { totalXp: 0, level: 1, name: 'Astronaut' };
+  const stats = userStats ?? { totalXp: 0, level: 1, name: 'Astronauta' };
 
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -407,7 +407,7 @@ export default function MissionMap({ chapters, userStats }: MissionMapProps) {
             className="relative w-full"
             style={{ height: MAP_H }}
             role="region"
-            aria-label="Chapter progression map"
+            aria-label="Mapa de progreso de capitulos"
           >
             <ConnectingPath bgRef={bgPathRef} fgRef={fgPathRef} />
 

@@ -32,11 +32,11 @@ describe('LessonNav', () => {
       />
     );
 
-    expect(screen.getByRole('link', { name: /Previous/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Anterior/i })).toHaveAttribute(
       'href',
       '/chapter/python-basics/lesson/lesson-one'
     );
-    expect(screen.getByRole('link', { name: /Next/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Siguiente/i })).toHaveAttribute(
       'href',
       '/chapter/python-basics/lesson/lesson-three'
     );
@@ -54,7 +54,7 @@ describe('LessonNav', () => {
       />
     );
 
-    expect(screen.queryByRole('link', { name: /Next/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Siguiente/i })).not.toBeInTheDocument();
   });
 
   it('shows the chapter complete action when there is no next lesson and the lesson is completed', () => {
@@ -68,9 +68,8 @@ describe('LessonNav', () => {
       />
     );
 
-    expect(screen.getByRole('link', { name: 'Chapter Complete! Back to Map' })).toHaveAttribute(
-      'href',
-      '/dashboard'
-    );
+    expect(
+      screen.getByRole('link', { name: 'Capitulo completado. Volver al mapa' })
+    ).toHaveAttribute('href', '/dashboard');
   });
 });

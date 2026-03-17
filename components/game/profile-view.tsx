@@ -59,7 +59,7 @@ function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?:
 }
 
 function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long' });
 }
 
 interface XpProgress {
@@ -109,7 +109,7 @@ export default function ProfileView({
               </h1>
 
               {/* Subtitle */}
-              <p className="mt-2 text-sm text-slate-400">Mission Control Operator</p>
+              <p className="mt-2 text-sm text-slate-400">Operador del centro de control</p>
             </div>
 
             {/* Stats Display */}
@@ -118,7 +118,7 @@ export default function ProfileView({
                 <LevelBadge level={stats.level} />
                 <div className="text-center">
                   <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-                    Total Experience
+                    Experiencia total
                   </p>
                   <p className="text-2xl font-bold text-[#FFD700]">
                     <AnimatedCounter value={stats.totalXp} duration={1500} /> XP
@@ -128,7 +128,7 @@ export default function ProfileView({
 
               {/* Join Date */}
               <p className="text-xs text-slate-500">
-                Joined{' '}
+                Se unio en{' '}
                 <span className="font-semibold text-slate-300">{formatDate(user.createdAt)}</span>
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function ProfileView({
           <SpaceCard className="space-y-3 border-[#FFD700]/30 bg-[#0B0F1A]/50 p-6 text-center">
             <div className="text-2xl">⭐</div>
             <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-              Total XP
+              XP total
             </p>
             <p className="text-3xl font-bold text-[#FFD700]">
               <AnimatedCounter value={stats.totalXp} duration={1500} />
@@ -152,7 +152,7 @@ export default function ProfileView({
           <SpaceCard className="space-y-4 border-[#1DCD9E]/30 bg-[#0B0F1A]/50 p-6">
             <div className="flex flex-col items-center gap-2">
               <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-                Level Progress
+                Progreso de nivel
               </p>
               <div className="text-3xl font-bold text-[#1DCD9E]">
                 <AnimatedCounter value={stats.level} duration={1500} />
@@ -177,7 +177,7 @@ export default function ProfileView({
           <SpaceCard className="space-y-3 border-purple-500/30 bg-[#0B0F1A]/50 p-6 text-center">
             <div className="text-2xl">📚</div>
             <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-              Missions Done
+              Misiones completadas
             </p>
             <p className="text-3xl font-bold text-purple-400">
               {totalCompleted}/{totalLessons}
@@ -189,7 +189,7 @@ export default function ProfileView({
         <SpaceCard className="space-y-6 border-[#1DCD9E]/40 bg-[#0B0F1A]/50 p-6">
           <div className="flex items-center gap-2 border-b border-[#1e2d3d] pb-4">
             <span className="text-xl">📊</span>
-            <h2 className="text-lg font-bold text-slate-100">Mission Progress Report</h2>
+            <h2 className="text-lg font-bold text-slate-100">Reporte de progreso de misión</h2>
           </div>
 
           <div className="space-y-4">
@@ -229,13 +229,13 @@ export default function ProfileView({
                     </div>
 
                     {/* Percentage */}
-                    <p className="text-right text-xs text-slate-500">{percentage}% complete</p>
+                    <p className="text-right text-xs text-slate-500">{percentage}% completado</p>
                   </div>
                 );
               })
             ) : (
               <p className="py-4 text-center text-sm text-slate-400">
-                No chapter progress yet. Start your first mission!
+                Aun no hay progreso por capitulos. Inicia tu primera misión.
               </p>
             )}
           </div>
@@ -245,11 +245,11 @@ export default function ProfileView({
         <SpaceCard className="space-y-4 border-[#1DCD9E]/40 bg-[#0B0F1A]/50 p-6">
           <div className="flex items-center gap-2 border-b border-[#1e2d3d] pb-4">
             <span className="text-xl">📝</span>
-            <h2 className="text-lg font-bold text-slate-100">Recent Activity</h2>
+            <h2 className="text-lg font-bold text-slate-100">Actividad reciente</h2>
           </div>
 
           <p className="py-6 text-center text-sm text-slate-400">
-            Recent mission logs coming soon...
+            Los registros recientes de misión estaran disponibles pronto...
           </p>
         </SpaceCard>
       </div>

@@ -81,13 +81,13 @@ export function usePyodide(): UsePyodideReturn {
 
     worker.onerror = (event: ErrorEvent) => {
       console.error('[usePyodide] Worker error:', event.message);
-      const errorMessage = event.message ?? 'Unknown worker error';
+      const errorMessage = event.message ?? 'Error desconocido del worker';
 
       for (const [id, pending] of pendingRef.current) {
         pending.resolve({
           success: false,
           output: '',
-          error: `Worker error: ${errorMessage}`,
+          error: `Error del worker: ${errorMessage}`,
         });
         pendingRef.current.delete(id);
       }
@@ -116,7 +116,7 @@ export function usePyodide(): UsePyodideReturn {
         call.resolve({
           success: false,
           output: '',
-          error: 'Component unmounted before execution completed.',
+          error: 'El componente se desmontó antes de completar la ejecucion.',
         });
       }
       pending.clear();

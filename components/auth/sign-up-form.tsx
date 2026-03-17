@@ -55,14 +55,14 @@ export default function SignUpForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
-                  Full Name
+                  Nombre completo
                 </FieldLabel>
                 <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 hover:border-slate-400 focus:ring-1 focus:outline-none dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
                     {...field}
                     id={field.name}
                     className="placeholder:text-slate-400 dark:placeholder:text-[#9eb7b1]"
-                    placeholder="John Doe"
+                    placeholder="Juan Perez"
                     aria-invalid={fieldState.invalid}
                     disabled={form.formState.isSubmitting}
                     autoComplete="name"
@@ -82,7 +82,7 @@ export default function SignUpForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
-                  Email
+                  Correo electronico
                 </FieldLabel>
                 <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 hover:border-slate-400 focus:ring-1 focus:outline-none dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
@@ -92,7 +92,7 @@ export default function SignUpForm() {
                     type="email"
                     inputMode="email"
                     autoComplete="email"
-                    placeholder="you@example.com"
+                    placeholder="tu@ejemplo.com"
                     aria-invalid={fieldState.invalid}
                     disabled={form.formState.isSubmitting}
                     required
@@ -111,7 +111,7 @@ export default function SignUpForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
-                  Password
+                  Contrasena
                 </FieldLabel>
                 <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 hover:border-slate-400 focus:ring-1 focus:outline-none dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
@@ -120,7 +120,7 @@ export default function SignUpForm() {
                     className="placeholder:text-slate-400 dark:placeholder:text-[#9eb7b1]"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="new-password"
-                    placeholder="Enter your password"
+                    placeholder="Ingresa tu contrasena"
                     aria-invalid={fieldState.invalid}
                     disabled={form.formState.isSubmitting}
                     required
@@ -130,7 +130,7 @@ export default function SignUpForm() {
                   </InputGroupAddon>
                   <InputGroupAddon align="inline-end">
                     <InputGroupButton
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
                       onClick={() => setShowPassword(!showPassword)}
                       size="icon-xs"
                     >
@@ -148,7 +148,7 @@ export default function SignUpForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name} className="text-slate-600 dark:text-slate-300">
-                  Confirm Password
+                  Confirmar contrasena
                 </FieldLabel>
                 <InputGroup className="focus-within:border-primary dark:focus-within:border-primary focus-within:ring-primary dark:focus-within:ring-primary group rounded-lg border-slate-300 bg-slate-50 transition-all duration-200 hover:border-slate-400 focus:ring-1 focus:outline-none dark:border-[#3d524c] dark:bg-[#111716]/80 dark:hover:border-[#536e66]">
                   <InputGroupInput
@@ -157,7 +157,7 @@ export default function SignUpForm() {
                     className="placeholder:text-slate-400 dark:placeholder:text-[#9eb7b1]"
                     type={showConfirmPassword ? 'text' : 'password'}
                     autoComplete="new-password"
-                    placeholder="Repeat your password"
+                    placeholder="Repite tu contrasena"
                     aria-invalid={fieldState.invalid}
                     disabled={form.formState.isSubmitting}
                     required
@@ -167,7 +167,7 @@ export default function SignUpForm() {
                   </InputGroupAddon>
                   <InputGroupAddon align="inline-end">
                     <InputGroupButton
-                      aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showConfirmPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       size="icon-xs"
                     >
@@ -191,19 +191,21 @@ export default function SignUpForm() {
               {form.formState.isSubmitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-                  <span className="text-base font-bold tracking-wide uppercase">Signing Up...</span>
+                  <span className="text-base font-bold tracking-wide uppercase">
+                    Registrando cuenta...
+                  </span>
                 </>
               ) : (
                 <>
                   <Send className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                  <span className="text-base font-bold tracking-wide uppercase">Sign Up</span>
+                  <span className="text-base font-bold tracking-wide uppercase">Registrarse</span>
                 </>
               )}
             </Button>
             <div className="text-center text-sm">
-              <span className="text-muted-foreground">Already have an account? </span>
+              <span className="text-muted-foreground">Ya tienes una cuenta? </span>
               <Link href="/sign-in" className="text-primary font-semibold hover:underline">
-                Login
+                Iniciar sesion
               </Link>
             </div>
           </Field>

@@ -40,12 +40,15 @@ describe('SignUpForm', () => {
   it('renders the expected fields and login link', () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText('Full Name')).toBeInTheDocument();
-    expect(screen.getByLabelText('Email')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Sign Up' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute('href', '/sign-in');
+    expect(screen.getByLabelText('Nombre completo')).toBeInTheDocument();
+    expect(screen.getByLabelText('Correo electronico')).toBeInTheDocument();
+    expect(screen.getByLabelText('Contrasena')).toBeInTheDocument();
+    expect(screen.getByLabelText('Confirmar contrasena')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Registrarse' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Iniciar sesion' })).toHaveAttribute(
+      'href',
+      '/sign-in'
+    );
   });
 
   it('toggles password and confirm password visibility independently', async () => {
@@ -53,9 +56,9 @@ describe('SignUpForm', () => {
 
     render(<SignUpForm />);
 
-    const passwordInput = screen.getByLabelText('Password');
-    const confirmPasswordInput = screen.getByLabelText('Confirm Password');
-    const toggleButtons = screen.getAllByRole('button', { name: 'Show password' });
+    const passwordInput = screen.getByLabelText('Contrasena');
+    const confirmPasswordInput = screen.getByLabelText('Confirmar contrasena');
+    const toggleButtons = screen.getAllByRole('button', { name: 'Mostrar contrasena' });
 
     expect(passwordInput).toHaveAttribute('type', 'password');
     expect(confirmPasswordInput).toHaveAttribute('type', 'password');
@@ -73,13 +76,13 @@ describe('SignUpForm', () => {
 
     render(<SignUpForm />);
 
-    await user.type(screen.getByLabelText('Full Name'), 'Ada Lovelace');
-    await user.type(screen.getByLabelText('Email'), 'ada@example.com');
-    await user.type(screen.getByLabelText('Password'), 'Secure123');
-    await user.type(screen.getByLabelText('Confirm Password'), 'Secure124');
+    await user.type(screen.getByLabelText('Nombre completo'), 'Ada Lovelace');
+    await user.type(screen.getByLabelText('Correo electronico'), 'ada@example.com');
+    await user.type(screen.getByLabelText('Contrasena'), 'Secure123');
+    await user.type(screen.getByLabelText('Confirmar contrasena'), 'Secure124');
     await user.tab();
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('Passwords do not match');
+    expect(await screen.findByRole('alert')).toHaveTextContent('Las contrasenas no coinciden');
     expect(signUpAction).not.toHaveBeenCalled();
   });
 
@@ -89,11 +92,11 @@ describe('SignUpForm', () => {
 
     render(<SignUpForm />);
 
-    await user.type(screen.getByLabelText('Full Name'), 'Ada Lovelace');
-    await user.type(screen.getByLabelText('Email'), 'ada@example.com');
-    await user.type(screen.getByLabelText('Password'), 'Secure123');
-    await user.type(screen.getByLabelText('Confirm Password'), 'Secure123');
-    await user.click(screen.getByRole('button', { name: 'Sign Up' }));
+    await user.type(screen.getByLabelText('Nombre completo'), 'Ada Lovelace');
+    await user.type(screen.getByLabelText('Correo electronico'), 'ada@example.com');
+    await user.type(screen.getByLabelText('Contrasena'), 'Secure123');
+    await user.type(screen.getByLabelText('Confirmar contrasena'), 'Secure123');
+    await user.click(screen.getByRole('button', { name: 'Registrarse' }));
 
     await waitFor(() => {
       expect(signUpAction).toHaveBeenCalledWith({
@@ -114,11 +117,11 @@ describe('SignUpForm', () => {
 
     render(<SignUpForm />);
 
-    await user.type(screen.getByLabelText('Full Name'), 'Ada Lovelace');
-    await user.type(screen.getByLabelText('Email'), 'ada@example.com');
-    await user.type(screen.getByLabelText('Password'), 'Secure123');
-    await user.type(screen.getByLabelText('Confirm Password'), 'Secure123');
-    await user.click(screen.getByRole('button', { name: 'Sign Up' }));
+    await user.type(screen.getByLabelText('Nombre completo'), 'Ada Lovelace');
+    await user.type(screen.getByLabelText('Correo electronico'), 'ada@example.com');
+    await user.type(screen.getByLabelText('Contrasena'), 'Secure123');
+    await user.type(screen.getByLabelText('Confirmar contrasena'), 'Secure123');
+    await user.click(screen.getByRole('button', { name: 'Registrarse' }));
 
     await waitFor(() => {
       expect(toastError).toHaveBeenCalledWith('Account already exists');

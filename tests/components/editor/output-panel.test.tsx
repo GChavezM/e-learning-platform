@@ -15,8 +15,8 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByLabelText('Python execution output')).toBeInTheDocument();
-    expect(screen.getByText('Output will appear here...')).toBeInTheDocument();
+    expect(screen.getByLabelText('Salida de ejecucion de Python')).toBeInTheDocument();
+    expect(screen.getByText('La salida aparecera aqui...')).toBeInTheDocument();
   });
 
   it('shows the loading state while code is running', () => {
@@ -30,7 +30,7 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByText('Running Code')).toBeInTheDocument();
+    expect(screen.getByText('Ejecutando codigo')).toBeInTheDocument();
   });
 
   it('shows the success banner when execution is correct', () => {
@@ -44,7 +44,7 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByText('✅ Mission objective complete!')).toBeInTheDocument();
+    expect(screen.getByText('✅ Objetivo de misión completado')).toBeInTheDocument();
     expect(screen.getByText('hello mission')).toBeInTheDocument();
   });
 
@@ -59,7 +59,7 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByText('⚠️ Test failed')).toBeInTheDocument();
+    expect(screen.getByText('⚠️ Prueba fallida')).toBeInTheDocument();
     expect(screen.getByText('Expected 4 but got 5')).toBeInTheDocument();
     expect(screen.getByText('stdout')).toBeInTheDocument();
     expect(screen.getByText('actual output')).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByText('❌ Error detected')).toBeInTheDocument();
+    expect(screen.getByText('❌ Error detectado')).toBeInTheDocument();
     expect(screen.getByText('SyntaxError')).toBeInTheDocument();
   });
 });

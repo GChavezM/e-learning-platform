@@ -69,7 +69,7 @@ function extractErrorMessage(error: unknown, rawOverride?: string): string {
   for (let i = lines.length - 1; i >= 0; i--) {
     if (exceptionLinePattern.test(lines[i])) {
       if (lines[i].startsWith('AssertionError') && lines[i] === 'AssertionError') {
-        return 'AssertionError: one or more test assertions failed - double check your output';
+        return 'AssertionError: una o mas pruebas fallaron - revisa tu salida';
       }
       return lines[i];
     }
@@ -167,7 +167,7 @@ self.onmessage = async (event: MessageEvent<WorkerIncomingMessage>): Promise<voi
       self.postMessage({
         id,
         success: false,
-        error: `Failed to load Python runtime: ${extractErrorMessage(error)}`,
+        error: `No se pudo cargar el entorno de Python: ${extractErrorMessage(error)}`,
         output: '',
       });
     }
@@ -182,7 +182,7 @@ self.onmessage = async (event: MessageEvent<WorkerIncomingMessage>): Promise<voi
     const response: WorkerErrorResponse = {
       id,
       success: false,
-      error: `Failed to load Python runtime: ${extractErrorMessage(error)}`,
+      error: `No se pudo cargar el entorno de Python: ${extractErrorMessage(error)}`,
       output: '',
     };
     self.postMessage(response);

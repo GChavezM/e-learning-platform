@@ -31,7 +31,7 @@ export default function AdminError({ error, reset }: ErrorProps) {
 
         {/* Title */}
         <h1 className="font-space-grotesk bg-linear-to-r from-[#FF6B6B] to-[#FF8E72] bg-clip-text text-4xl font-bold text-transparent">
-          Something went wrong
+          Algo salio mal
         </h1>
 
         {/* Error Message Box */}
@@ -40,10 +40,10 @@ export default function AdminError({ error, reset }: ErrorProps) {
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#FF6B6B]" />
             <div className="flex-1 text-left">
               <p className="mb-2 font-mono text-xs tracking-widest text-[#FF6B6B] uppercase">
-                Error Details
+                Detalles del error
               </p>
               <code className="block max-h-32 overflow-auto font-mono text-xs wrap-break-word whitespace-pre-wrap text-slate-300">
-                {error.message || 'An unknown error occurred'}
+                {error.message || 'Ocurrio un error desconocido'}
               </code>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default function AdminError({ error, reset }: ErrorProps) {
             className="gap-2 bg-linear-to-r from-[#1DCD9E] to-cyan-400 font-semibold text-[#060A12] transition-all hover:shadow-[0_0_20px_rgba(29,205,158,0.4)]"
           >
             <span>↻</span>
-            Try Again
+            Reintentar
           </Button>
 
           <Button
@@ -68,7 +68,7 @@ export default function AdminError({ error, reset }: ErrorProps) {
           >
             <Link href="/dashboard">
               <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
+              Volver al panel
             </Link>
           </Button>
         </div>
@@ -76,7 +76,7 @@ export default function AdminError({ error, reset }: ErrorProps) {
         {/* Debug Info */}
         {error.digest && (
           <p className="border-t border-[#1e2d3d] pt-4 text-xs text-slate-500">
-            Error ID: <span className="font-mono text-slate-400">{error.digest}</span>
+            ID de error: <span className="font-mono text-slate-400">{error.digest}</span>
           </p>
         )}
       </div>

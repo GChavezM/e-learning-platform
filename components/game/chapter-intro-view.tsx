@@ -99,10 +99,10 @@ export default function ChapterIntroView({
   const chapterEmoji = getChapterEmoji(chapter.order);
   const isStarted = chapterProgress.completed > 0;
   const ctaLabel = chapterProgress.allComplete
-    ? 'Replay Chapter'
+    ? 'Repetir capitulo'
     : isStarted
-      ? 'Continue Mission'
-      : 'Start Mission';
+      ? 'Continuar mision'
+      : 'Iniciar mision';
   const ctaTarget = resumeLesson ?? lessons[0];
 
   return (
@@ -120,7 +120,7 @@ export default function ChapterIntroView({
           {/* Chapter Number */}
           <span className="inline-flex items-center gap-2 rounded-full border border-[#1DCD9E]/40 bg-[#1DCD9E]/10 px-4 py-1.5 text-xs font-bold tracking-widest text-[#1DCD9E] uppercase">
             <Zap className="h-3.5 w-3.5" />
-            Chapter {chapter.order}
+            Capitulo {chapter.order}
           </span>
 
           {/* Title */}
@@ -130,14 +130,14 @@ export default function ChapterIntroView({
 
           {/* Subtitle (Python Topic) */}
           <p className="max-w-2xl text-center text-sm text-slate-300">
-            Learning: <span className="font-semibold text-[#1DCD9E]">{chapter.description}</span>
+            Aprendizaje: <span className="font-semibold text-[#1DCD9E]">{chapter.description}</span>
           </p>
 
           {/* XP Available */}
           <div className="flex items-center gap-2 rounded-lg border border-[#FFD700]/30 bg-[#FFD700]/10 px-4 py-2">
             <span className="text-lg">⭐</span>
             <span className="text-sm font-semibold text-[#FFD700]">
-              {totalXP} XP available in this chapter
+              {totalXP} XP disponibles en este capitulo
             </span>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function ChapterIntroView({
         >
           <Link href="/dashboard">
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Map
+            Volver al mapa
           </Link>
         </Button>
 
@@ -162,7 +162,7 @@ export default function ChapterIntroView({
           <div className="flex items-center gap-2">
             <span className="text-xl">📡</span>
             <h2 className="text-sm font-bold tracking-wide text-[#1DCD9E] uppercase">
-              Incoming Transmission from Commander Nova
+              Transmision entrante de la Comandante Nova
             </h2>
           </div>
 
@@ -173,7 +173,7 @@ export default function ChapterIntroView({
 
         {/* Mission Objectives Header */}
         <div className="flex items-center justify-between gap-4 border-b border-[#1e2d3d] pb-4">
-          <h2 className="text-lg font-bold text-slate-100">📋 Mission Objectives</h2>
+          <h2 className="text-lg font-bold text-slate-100">📋 Objetivos de mision</h2>
           <div className="flex items-center gap-3">
             <div className="h-2 w-48 overflow-hidden rounded-full bg-[#1e2d3d]">
               <div

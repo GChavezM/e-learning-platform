@@ -11,10 +11,10 @@ export default function Cta() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-180 text-center">
-        <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">Ready for Lift Off?</h2>
+        <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">Listo para despegar?</h2>
         <p className={`${notoSans.className} mb-8 text-lg text-slate-300`}>
-          The engines are primed. The crew is waiting. Your journey to Python mastery begins in 3...
-          2... 1...
+          Los motores estan listos. La tripulacion espera. Tu viaje para dominar Python comienza en
+          3... 2... 1...
         </p>
         <Button
           size="lg"
@@ -22,11 +22,11 @@ export default function Cta() {
           asChild
         >
           <Link href="/sign-up">
-            Initialize Launch Sequence
+            Iniciar secuencia de lanzamiento
             <ArrowRight size={20} />
           </Link>
         </Button>
-        <p className="mt-4 text-xs text-slate-500">No credit card required. Free tier available.</p>
+        <p className="mt-4 text-xs text-slate-500">No se requiere tarjeta de credito.</p>
       </div>
     </section>
   );

@@ -30,7 +30,7 @@ export function XPBadge({ xp, size = 'md', className }: XPBadgeProps) {
   return (
     <span
       role="status"
-      aria-label={`${xp} experience points`}
+      aria-label={`${xp} puntos de experiencia`}
       style={{
         color: 'var(--xp-gold)',
         backgroundColor: 'color-mix(in oklch, var(--xp-gold) 10%, transparent)',

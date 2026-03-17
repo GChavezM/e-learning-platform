@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'PyMission Control',
-  description: 'A modern e-learning platform for python programming',
+  description: 'Una plataforma moderna de e-learning para programacion en Python',
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body className={`${spaceGrotesk.className} antialiased`}>
         <Suspense fallback={null}>
           <ThemeProvider>

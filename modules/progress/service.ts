@@ -189,7 +189,7 @@ async function getChallengeProgressContext(
   });
 
   if (!challenge) {
-    throw new ProgressAccessError('CHALLENGE_NOT_FOUND', 'Challenge not found', 404);
+    throw new ProgressAccessError('CHALLENGE_NOT_FOUND', 'Desafio no encontrado', 404);
   }
 
   return {
@@ -210,7 +210,7 @@ async function assertChallengeUnlocked(
   const unlocked = await isLessonUnlocked(userId, context.lessonId, db);
 
   if (!unlocked) {
-    throw new ProgressAccessError('LESSON_LOCKED', 'This lesson is currently locked', 403);
+    throw new ProgressAccessError('LESSON_LOCKED', 'Esta leccion esta bloqueada actualmente', 403);
   }
 
   return context;

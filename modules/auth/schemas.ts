@@ -5,25 +5,25 @@ export const signUpSchema = z
     name: z
       .string()
       .trim()
-      .min(2, 'Name must be at least 2 characters')
-      .regex(/^[\p{L}\s]+$/u, 'Name can only contain letters and spaces'),
-    email: z.email({ error: 'Please enter a valid email address' }).trim().toLowerCase(),
+      .min(2, 'El nombre debe tener al menos 2 caracteres')
+      .regex(/^[\p{L}\s]+$/u, 'El nombre solo puede contener letras y espacios'),
+    email: z.email({ error: 'Ingresa una direccion de correo valida' }).trim().toLowerCase(),
     password: z
       .string()
       .trim()
-      .min(8, { error: 'Password must be at least 8 characters' })
-      .regex(/[a-z]/, { error: 'Password must contain at least one lowercase letter' })
-      .regex(/[A-Z]/, { error: 'Password must contain at least one uppercase letter' })
-      .regex(/\d/, { error: 'Password must contain at least one number' }),
+      .min(8, { error: 'La contrasena debe tener al menos 8 caracteres' })
+      .regex(/[a-z]/, { error: 'La contrasena debe incluir al menos una letra minuscula' })
+      .regex(/[A-Z]/, { error: 'La contrasena debe incluir al menos una letra mayuscula' })
+      .regex(/\d/, { error: 'La contrasena debe incluir al menos un numero' }),
     confirmPassword: z.string().trim(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    error: 'Passwords do not match',
+    error: 'Las contrasenas no coinciden',
     path: ['confirmPassword'],
   });
 
 export const signInSchema = z.object({
-  email: z.email({ error: 'Please enter a valid email address' }).trim().toLowerCase(),
+  email: z.email({ error: 'Ingresa una direccion de correo valida' }).trim().toLowerCase(),
   password: z.string().trim().min(1),
 });
 

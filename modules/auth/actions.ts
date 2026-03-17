@@ -11,7 +11,7 @@ export async function signInAction(formData: SignInFormData): Promise<ActionResu
   const parsed = signInSchema.safeParse(formData);
 
   if (!parsed.success) {
-    return { success: false, error: 'Invalid credentials' };
+    return { success: false, error: 'Credenciales invalidas' };
   }
 
   const result = await authService.signIn(parsed.data, await headers());
@@ -27,7 +27,7 @@ export async function signUpAction(formData: SignUpFormData): Promise<ActionResu
   const parsed = signUpSchema.safeParse(formData);
 
   if (!parsed.success) {
-    return { success: false, error: 'Invalid input. Please check your details' };
+    return { success: false, error: 'Datos inválidos. Revisa la información ingresada' };
   }
 
   const result = await authService.signUp(parsed.data, await headers());

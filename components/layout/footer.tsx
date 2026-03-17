@@ -10,12 +10,12 @@ export default function Footer() {
             <span className="text-lg font-bold">PyMission Control</span>
           </div>
           <p className="text-muted-foreground max-w-70 text-sm">
-            A gamified coding adventure. Learn Python while exploring the galaxy.
+            Una aventura de codigo gamificada. Aprende Python mientras exploras la galaxia.
           </p>
         </div>
         <div className="border-border mt-10 w-full border-t pt-6 text-center">
           <p className="text-muted-foreground text-xs">
-            &copy; 2026 PyMission Control. All rights reserved.
+            &copy; 2026 PyMission Control. Todos los derechos reservados.
           </p>
         </div>
       </div>

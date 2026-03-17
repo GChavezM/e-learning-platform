@@ -9,15 +9,15 @@ export default function Story() {
           <div className="flex flex-col gap-6">
             <div className="text-primary flex items-center gap-2 text-sm font-bold tracking-widest uppercase">
               <Terminal size={18} />
-              Mission Briefing
+              Informe de misión
             </div>
 
-            <h2 className="text-4xl leading-tight font-bold text-white md:text-5xl">The Story</h2>
+            <h2 className="text-4xl leading-tight font-bold text-white md:text-5xl">La historia</h2>
 
             <p className={`${notoSans.className} text-lg leading-relaxed text-slate-300`}>
-              The guidance navigation system is down. We&apos;ve lost contact with the main vessel.
-              You are the flight engineer, and your Python scripts are the only thing that can
-              reboot the engines.
+              El sistema de guiado y navegación está caído. Hemos perdido contacto con la nave
+              principal. Tú eres el ingeniero de vuelo, y tus scripts de Python son lo único que
+              puede reiniciar los motores.
             </p>
 
             <div className="bg-surface-dark border-border group relative overflow-hidden rounded-lg border p-6 font-mono text-sm text-slate-300">
@@ -29,8 +29,8 @@ export default function Story() {
                 <div className="h-3 w-3 rounded-full bg-green-500" />
               </div>
 
-              <p className="mb-2 text-red-400">&gt; ERROR: Oxygen_Levels_Critical</p>
-              <p className="mb-2 text-slate-400">&gt; System: Initiating manual override...</p>
+              <p className="mb-2 text-red-400">&gt; ERROR: Niveles_de_Oxígeno_Criticos</p>
+              <p className="mb-2 text-slate-400">&gt; Sistema: Iniciando anulación manual...</p>
               <p className="text-primary mb-2">
                 &gt; <span className="text-white">def</span>{' '}
                 <span className="text-yellow-300">restore_oxygen</span>(pressure):
@@ -40,7 +40,7 @@ export default function Story() {
               </p>
               <p className="text-primary pl-8">
                 &gt; <span className="text-purple-400">return</span>{' '}
-                <span className="text-green-300">&quot;Emergency Boost&quot;</span>
+                <span className="text-green-300">&quot;Impulso de Emergencia&quot;</span>
               </p>
 
               <div className="bg-primary absolute right-4 bottom-4 h-4 w-2 animate-pulse" />
@@ -59,11 +59,13 @@ export default function Story() {
                 <div className="mb-2 flex items-center gap-3">
                   <div className="h-2 w-2 animate-ping rounded-full bg-red-500" />
                   <span className="text-xs font-bold tracking-wider text-red-400 uppercase">
-                    Connection Unstable
+                    Conexion inestable
                   </span>
                 </div>
 
-                <p className="font-medium text-white">Cadet, do you copy? We need that code now!</p>
+                <p className="font-medium text-white">
+                  Cadete, me recibes? Necesitamos ese codigo ahora.
+                </p>
               </div>
             </div>
           </div>

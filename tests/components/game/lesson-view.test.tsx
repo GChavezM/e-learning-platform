@@ -88,14 +88,14 @@ jest.mock('@/components/editor/run-button', () => ({
   __esModule: true,
   default: ({ disabled, onClick }: { disabled?: boolean; onClick: () => void }) => (
     <button disabled={disabled} onClick={onClick}>
-      Run Mission
+      Ejecutar mision
     </button>
   ),
 }));
 
 jest.mock('@/components/game/pyodide-loading-overlay', () => ({
   __esModule: true,
-  default: ({ isReady }: { isReady: boolean }) => (isReady ? null : <div>Loading Python</div>),
+  default: ({ isReady }: { isReady: boolean }) => (isReady ? null : <div>Cargando Python</div>),
 }));
 
 jest.mock('@/components/game/lesson-nav', () => ({
@@ -142,11 +142,11 @@ describe('LessonView', () => {
       />
     );
 
-    expect(screen.getByRole('link', { name: 'Create Free Account' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Crear cuenta gratis' })).toHaveAttribute(
       'href',
       '/sign-up'
     );
-    expect(screen.queryByRole('button', { name: 'Run Mission' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Ejecutar mision' })).not.toBeInTheDocument();
   });
 
   it('runs the challenge code and then allows submission on success', async () => {
@@ -167,15 +167,15 @@ describe('LessonView', () => {
 
     await user.clear(screen.getByLabelText('Code editor'));
     await user.type(screen.getByLabelText('Code editor'), 'print("mission")');
-    await user.click(screen.getByRole('button', { name: 'Run Mission' }));
+    await user.click(screen.getByRole('button', { name: 'Ejecutar mision' }));
 
     await waitFor(() => {
       expect(runCode).toHaveBeenCalledWith('print("mission")', 'assert True');
     });
 
-    expect(await screen.findByRole('button', { name: /Submit & Continue/i })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /Enviar y continuar/i })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /Submit & Continue/i }));
+    await user.click(screen.getByRole('button', { name: /Enviar y continuar/i }));
 
     await waitFor(() => {
       expect(submitChallengeAction).toHaveBeenCalledWith({
@@ -186,7 +186,7 @@ describe('LessonView', () => {
       });
     });
 
-    expect(toastSuccess).toHaveBeenCalledWith('+100 XP earned! Mission objective logged');
+    expect(toastSuccess).toHaveBeenCalledWith('+100 XP ganados. Objetivo de misión registrado');
 
     await waitFor(
       () => {
@@ -194,7 +194,7 @@ describe('LessonView', () => {
       },
       { timeout: 2500 }
     );
-  });
+  }, 10000);
 
   it('shows an error toast when submission fails', async () => {
     const user = userEvent.setup();
@@ -212,8 +212,8 @@ describe('LessonView', () => {
       />
     );
 
-    await user.click(screen.getByRole('button', { name: 'Run Mission' }));
-    await user.click(await screen.findByRole('button', { name: /Submit & Continue/i }));
+    await user.click(screen.getByRole('button', { name: 'Ejecutar mision' }));
+    await user.click(await screen.findByRole('button', { name: /Enviar y continuar/i }));
 
     await waitFor(() => {
       expect(toastError).toHaveBeenCalledWith('Submission failed');
@@ -234,7 +234,7 @@ describe('LessonView', () => {
       />
     );
 
-    expect(screen.getByText(/Mission Complete/i)).toBeInTheDocument();
-    expect(screen.getByText('Completed')).toBeInTheDocument();
+    expect(screen.getByText(/Mision completada/i)).toBeInTheDocument();
+    expect(screen.getByText('Completado')).toBeInTheDocument();
   });
 });

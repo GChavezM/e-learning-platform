@@ -28,15 +28,15 @@ export default function NotFound() {
             Error 404
           </p>
           <h1 className="font-space-grotesk bg-linear-to-r from-[#1DCD9E] to-cyan-400 bg-clip-text text-5xl font-black text-transparent lg:text-6xl">
-            Lost in Space
+            Perdido en el espacio
           </h1>
         </div>
 
         {/* Description */}
         <p className="max-w-sm text-base leading-relaxed text-slate-400">
-          This sector of the galaxy doesn&apos;t exist.
+          Este sector de la galaxia no existe.
           <br />
-          Returning to base is recommended.
+          Se recomienda volver a la base.
         </p>
 
         {/* Back to Dashboard */}
@@ -44,7 +44,7 @@ export default function NotFound() {
           href="/dashboard"
           className="inline-flex items-center gap-2 rounded-lg border border-[#1DCD9E]/40 bg-[#1DCD9E]/10 px-6 py-3 text-sm font-semibold text-[#1DCD9E] transition-all hover:bg-[#1DCD9E]/20 hover:shadow-[0_0_20px_rgba(29,205,158,0.3)]"
         >
-          ← Return to Mission Control
+          ← Volver al centro de control
         </Link>
       </div>
     </div>

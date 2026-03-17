@@ -92,7 +92,7 @@ export function StatsSummary({
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <StatCard
         icon={<Star className="h-8 w-8" />}
-        label="Total XP"
+        label="XP total"
         value={totalXp}
         animatedValue={totalXp}
         color="gold"
@@ -100,7 +100,7 @@ export function StatsSummary({
 
       <StatCard
         icon={<Shield className="h-8 w-8" />}
-        label="Current Level"
+        label="Nivel actual"
         value={level}
         animatedValue={level}
         color="cyan"
@@ -108,7 +108,7 @@ export function StatsSummary({
 
       <StatCard
         icon={<CheckCircle className="h-8 w-8" />}
-        label="Lessons Done"
+        label="Lecciones completadas"
         value={`${lessonsCompleted}/${totalLessons}`}
         color="purple"
       />

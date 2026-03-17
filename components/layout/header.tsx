@@ -20,13 +20,13 @@ export default function Header() {
           className="bg-surface-dark hover:border-primary/50 dark:bg-surface-dark dark:hover:border-primary/50 hidden h-9 min-w-21 sm:flex"
           asChild
         >
-          <Link href="/sign-in">Login</Link>
+          <Link href="/sign-in">Iniciar sesión</Link>
         </Button>
         <Button
           className="bg-primary hover:bg-primary text-background flex h-9 min-w-21 shadow-[0_0_25px_rgba(29,205,158,0.3)] hover:shadow-[0_0_25px_rgba(29,205,158,0.5)]"
           asChild
         >
-          <Link href="/sign-up">Sign Up</Link>
+          <Link href="/sign-up">Registrarse</Link>
         </Button>
       </div>
     </header>

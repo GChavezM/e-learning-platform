@@ -44,9 +44,9 @@ const headerVariants: Record<PanelVariant, string | null> = {
 const headerLabels: Record<PanelVariant, string | null> = {
   idle: null,
   loading: null,
-  success: '✅ Mission objective complete!',
-  testFailure: '⚠️ Test failed',
-  error: '❌ Error detected',
+  success: '✅ Objetivo de misión completado',
+  testFailure: '⚠️ Prueba fallida',
+  error: '❌ Error detectado',
   output: null,
 };
 
@@ -57,7 +57,7 @@ function LoadingState() {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1DCD9E] opacity-75" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#1DCD9E]" />
       </span>
-      <span className="text-sm tracking-wide">Running Code</span>
+      <span className="text-sm tracking-wide">Ejecutando código</span>
     </div>
   );
 }
@@ -88,7 +88,7 @@ function OutputBody({ variant, output, error }: OutputBodyProps) {
   if (variant === 'idle') {
     return (
       <p className="px-4 py-4 text-sm text-[#3D5568] italic select-none">
-        Output will appear here...
+        La salida aparecera aqui...
       </p>
     );
   }
@@ -146,7 +146,7 @@ function OutputBody({ variant, output, error }: OutputBodyProps) {
 
   return (
     <pre className="overflow-x-auto px-4 py-3 text-sm leading-relaxed wrap-break-word whitespace-pre-wrap text-slate-200">
-      {showOutput ? output : <span className="text-[#3D5568] italic">(no output)</span>}
+      {showOutput ? output : <span className="text-[#3D5568] italic">(sin salida)</span>}
     </pre>
   );
 }
@@ -168,11 +168,11 @@ export default function OutputPanel({
         containerVariants[variant]
       )}
       aria-live="polite"
-      aria-label="Python execution output"
+      aria-label="Salida de ejecucion de Python"
     >
       <div className="flex items-center gap-2 border-b border-[#1E2D3D] bg-[#0B0F1A] px-4 py-2">
         <span className="text-xs font-semibold tracking-widest text-[#3D5568] uppercase select-none">
-          Output
+          Salida
         </span>
       </div>
 

@@ -7,7 +7,7 @@ describe('XPBadge', () => {
   it('renders the xp value with an accessible status label', () => {
     render(<XPBadge xp={1250} />);
 
-    expect(screen.getByRole('status', { name: '1250 experience points' })).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: '1250 puntos de experiencia' })).toBeInTheDocument();
     expect(screen.getByText('1,250 XP')).toBeInTheDocument();
   });
 

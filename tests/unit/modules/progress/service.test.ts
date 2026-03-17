@@ -42,12 +42,12 @@ function createMockDb(): MockDb {
 
 describe('ProgressAccessError', () => {
   it('stores the code, message, status, and name', () => {
-    const error = new ProgressAccessError('LESSON_LOCKED', 'Locked', 403);
+    const error = new ProgressAccessError('LESSON_LOCKED', 'Bloqueado', 403);
 
     expect(error).toBeInstanceOf(Error);
     expect(error.name).toBe('ProgressAccessError');
     expect(error.code).toBe('LESSON_LOCKED');
-    expect(error.message).toBe('Locked');
+    expect(error.message).toBe('Bloqueado');
     expect(error.status).toBe(403);
   });
 });
