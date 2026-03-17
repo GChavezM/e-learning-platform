@@ -16,6 +16,15 @@ export const auth = betterAuth({
   },
   plugins: [nextCookies()],
   trustedOrigins: [process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3000'],
+  user: {
+    additionalFields: {
+      role: {
+        type: ['student', 'admin'],
+        default: 'student',
+        input: false,
+      },
+    },
+  },
   databaseHooks: {
     user: {
       create: {
