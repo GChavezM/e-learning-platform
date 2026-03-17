@@ -187,6 +187,13 @@ describe('LessonView', () => {
     });
 
     expect(toastSuccess).toHaveBeenCalledWith('+100 XP earned! Mission objective logged');
+
+    await waitFor(
+      () => {
+        expect(push).toHaveBeenCalledWith('/chapter/python-basics/lesson/lesson-two');
+      },
+      { timeout: 2500 }
+    );
   });
 
   it('shows an error toast when submission fails', async () => {

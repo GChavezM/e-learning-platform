@@ -27,6 +27,10 @@ interface LessonViewProps {
   isGuestMode?: boolean;
 }
 
+function lessonUrl(chapterSlug: string, lessonSlug: string) {
+  return `/chapter/${chapterSlug}/lesson/${lessonSlug}`;
+}
+
 export default function LessonView({
   lesson,
   alreadyCompleted,
@@ -95,9 +99,11 @@ export default function LessonView({
         toast.success(`+${result.xpAwarded} XP earned! Mission objective logged`);
       }
 
-      setTimeout(() => router.push('/dashboard'), 1500);
+      const redirectUrl = nextLesson ? lessonUrl(chapter.slug, nextLesson.slug) : '/dashboard';
+
+      setTimeout(() => router.push(redirectUrl), 1500);
     });
-  }, [challenge, code, output, isCorrect, hasSubmitted, router]);
+  }, [challenge, code, output, isCorrect, hasSubmitted, router, nextLesson, chapter.slug]);
 
   return (
     <div className="min-h-screen bg-[#060A12]">

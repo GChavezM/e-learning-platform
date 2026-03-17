@@ -208,7 +208,7 @@ export default function ChapterIntroView({
               size="lg"
               className="gap-2 bg-linear-to-r from-[#1DCD9E] to-cyan-400 font-semibold text-[#060A12] transition-all hover:shadow-[0_0_20px_rgba(29,205,158,0.4)]"
             >
-              <Link href={lessonUrl(chapter.id, ctaTarget.id)}>
+              <Link href={lessonUrl(chapter.slug, ctaTarget.slug)}>
                 {ctaLabel}
                 <ArrowRight className="h-4 w-4" />
               </Link>
