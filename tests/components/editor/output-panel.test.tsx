@@ -30,7 +30,7 @@ describe('OutputPanel', () => {
       />
     );
 
-    expect(screen.getByText('Ejecutando codigo')).toBeInTheDocument();
+    expect(screen.getByText('Ejecutando código')).toBeInTheDocument();
   });
 
   it('shows the success banner when execution is correct', () => {

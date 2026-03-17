@@ -234,7 +234,7 @@ describe('LessonView', () => {
       />
     );
 
-    expect(screen.getByText(/Mision completada/i)).toBeInTheDocument();
+    expect(screen.getByText(/Misión completada/i)).toBeInTheDocument();
     expect(screen.getByText('Completado')).toBeInTheDocument();
   });
 });
